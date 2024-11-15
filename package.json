@@ -1,26 +1,29 @@
 {
-  "name": "poultry-management-frontend",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
   "dependencies": {
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "next": "15.0.3"
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@material-tailwind/react": "^2.1.10",
+    "next": "15.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-multi-carousel": "^2.8.5",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.28.0",
+    "swiper": "^11.1.14"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
+    "@types/node": "^20.17.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "daisyui": "^4.12.14",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.3",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.3"
+    "typescript": "^5"
+  },
+  "scripts": {
+    "dev": "next dev"
   }
 }
