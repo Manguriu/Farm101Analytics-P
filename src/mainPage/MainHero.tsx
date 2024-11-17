@@ -1,97 +1,106 @@
+// 
+
+
+
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import MainHeader from "./MainHeader";
-import dynamic from "next/dynamic";
-import "react-multi-carousel/lib/styles.css";
-
-const Carousel = dynamic(() => import("react-multi-carousel"), { ssr: false });
-
-const responsive = {
-  desktop: { breakpoint: { max: 3000, min: 1024 }, items: 1 },
-  tablet: { breakpoint: { max: 1024, min: 464 }, items: 1 },
-  mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
-};
+import HeroCountDown from "./HeroCountDown";
 
 export default function MainHero() {
-  const router = useRouter(); // Initialize useRouter
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0); // Index of the current video
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false); // Track video loading state
+
+  const videos = ["/Pvideo1.mp4", "/Pvideo2.mp4", "/Pvideo3.mp4", "/Pvideo4.mp4"]; // Video sources
+
+  useEffect(() => {
+    // Interval to change the video
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prev) => (prev + 1) % videos.length); // Move to the next video
+    }, 10000); // Change video every 10 seconds
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [videos]);
+
+  const router = useRouter();
 
   const handleGetStarted = () => {
-    router.push("/pages/Dashboard"); 
+    router.push("/pages/Dashboard");
   };
 
   return (
-    <div
-      className="relative overflow-hidden h-screen flex flex-col"
-      style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(1, 0, 0, 1)), url('/MainHero5.png')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+    <div className="relative h-screen flex flex-col bg-gradient-to-b from-blue-800 to-gray-900">
+      {/* Static Placeholder */}
+      {!isVideoLoaded && (
+        <img
+          src="/placeholder.jpg"
+          alt="Loading..."
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+
+      {/* Background Videos with Crossfade Effect */}
+      {videos.map((video, index) => (
+        <video
+          key={index}
+          className={`absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-1000 ${
+            index === currentVideoIndex
+              ? "opacity-100 z-0"
+              : "opacity-0 z-10"
+          }`}
+          autoPlay
+          muted
+          loop
+          onLoadedData={() => setIsVideoLoaded(true)} // Set loading state to true when video is ready
+          preload="auto" // Preload video for faster start
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+      ))}
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
       {/* Main Header */}
       <MainHeader />
 
-      {/* Main Content */}
-      <div className="flex-grow flex items-center justify-center relative z-10">
-        <div className="max-w-6xl flex flex-col md:flex-row items-center justify-between px-8 py-16 space-y-8 md:space-y-0 md:space-x-12 gap-2">
-          
-          {/* Left Text Section */}
-          <div className="text-center md:text-left flex flex-col items-center md:items-start w-3/4">
-            <h1 className="text-5xl font-bold text-green-600 mb-4">
-              Optimize Your Poultry Management with SmartPoultry Hub
-            </h1>
-            <p className="text-xl text-white mb-4">
-              SmartPoultry Hub is designed to streamline poultry management and boost productivity for your farm.
-            </p>
-            <button
-              onClick={handleGetStarted} // Attach the click handler
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full"
-            >
-              Get Started
-            </button>
-            <p className="text-sm text-red-500 mt-2">Limited Time Offer: Start Free Trial Today!</p>
-            <p className="text-sm text-white mt-4">Trusted by over 1,000 poultry farms worldwide</p>
-          </div>
+      {/* Content */}
+      <div className="flex-grow flex flex-col justify-center items-center text-center px-4 relative z-10">
+        {/* Tagline */}
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
+          The Future of Poultry Farming <br />
+          <span className="text-yellow-500">Starts Here</span>
+        </h1>
+        {/* Subtitle */}
+        <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-8 max-w-3xl">
+          Harness the power of technology to maximize efficiency, reduce waste, 
+          and grow your poultry business. SmartPoultry Hub is built for serious farmers who mean business.
+        </p>
 
-          {/* Carousel Section */}
-          <div className="w-full md:w-1/2 lg:w-1/3 rounded-lg overflow-hidden shadow-lg">
-            <Carousel
-              swipeable={true}
-              draggable={true}
-              showDots={true}
-              responsive={responsive}
-              infinite={true}
-              autoPlay={true}
-              autoPlaySpeed={4000}
-              keyBoardControl={true}
-              customTransition="all .5"
-              transitionDuration={500}
-              containerClass="carousel-container"
-              removeArrowOnDeviceType={["tablet", "mobile"]}
-              dotListClass="custom-dot-list-style"
-              itemClass="carousel-item-padding-40-px"
-            >
-              <div>
-                <img src="/mainHero1.png" className="w-full h-[400px] object-cover rounded-lg" />
-              </div>
-              <div>
-                <img src="/mainHero2.png" className="w-full h-[400px] object-cover rounded-lg" />
-              </div>
-              <div>
-                <img src="/MainHero5.png" className="w-full h-[400px] object-cover rounded-lg" />
-              </div>
-              <div>
-                <img src="/MainHero4.png" className="w-full h-[400px] object-cover rounded-lg" />
-              </div>
-              <div>
-                <img src="/MainLogo.png" className="w-full h-[400px] object-cover rounded-lg" />
-              </div>
-            </Carousel>
-          </div>
+        {/* Call-to-Actions */}
+        <div className="flex flex-wrap justify-center gap-4">
+          <button
+            onClick={handleGetStarted}
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 sm:px-8 rounded-full shadow-lg transform hover:scale-105 transition"
+          >
+            Get Started
+          </button>
+          <button
+            onClick={() => router.push("/pages/About")}
+            className="bg-transparent border-2 border-yellow-500 text-yellow-500 font-bold py-3 px-6 sm:px-8 rounded-full shadow-lg hover:bg-yellow-500 hover:text-black transition transform hover:scale-105"
+          >
+            Learn More
+          </button>
+        </div>
+
+        {/* Business Stats */}
+        <div className="mt-12 flex flex-wrap justify-center gap-8">
+          <HeroCountDown />
         </div>
       </div>
     </div>
