@@ -29,17 +29,17 @@ const Dashboard = () => {
           <div className="w-10 h-10 bg-blue-500 rounded-full flex justify-center items-center">
             <span className="text-white text-xl font-bold">S</span>
           </div>
-          <h2 className="text-2xl font-bold ml-4">Starpath</h2>
+          <h2 className="text-2xl font-bold ml-4">SmartPoultry Hub</h2>
         </div>
 
         {/* Navigation Links */}
         <nav className="flex flex-col space-y-4">
           <Link
-            href="/dashboard"
+            href="/"
             className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
           >
             <i className="fas fa-home"></i>
-            <span className="text-lg">Dashboard</span>
+            <span className="text-lg">Home</span>
           </Link>
           <Link
             href="/products"
