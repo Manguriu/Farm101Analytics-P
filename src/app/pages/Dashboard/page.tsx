@@ -1,35 +1,47 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
-import React from "react";
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
+
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-// import { useState } from "react";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 const Dashboard = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Toggle for the dropdown menu
+
+  const router = useRouter();
+
   const handleFlockManagement = () => {
     router.push("/pages/FlockManagement");
   };
 
-  const router = useRouter(); // Initialize useRouter
+  const handleFlockFeedAndWater = () => {
+    router.push("/pages/FeedWaterTracking");
+  };
 
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // const toggleMenu = () => {
-  //   setIsMenuOpen((prev) => !prev);
-  // };
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 text-white flex flex-col p-6">
+    <div className="flex flex-col md:flex-row min-h-screen bg-grey-100">
+      {/* Sidebar / Dropdown Menu */}
+      <aside
+        className={`${
+          isMenuOpen ? "block" : "hidden"
+        } md:block bg-gradient-to-b from-blue-800 to-gray-900 text-white flex flex-col w-full md:w-64 p-4 md:p-6 absolute md:static z-10`}
+      >
         {/* Logo Section */}
         <div className="flex items-center mb-8">
-          <div className="w-10 h-10 bg-blue-500 rounded-full flex justify-center items-center">
-            <span className="text-white text-xl font-bold">S</span>
-          </div>
-          <h2 className="text-2xl font-bold ml-4">SmartPoultry Hub</h2>
+          {/* <div className="w-10 h-10 rounded-full flex justify-center items-center">
+            <span className="text-white text-xl font-bold"><i className="fas fa-bars"></i></span>
+          </div> */}
+          <h2 className="text-lg md:text-2xl font-bold ml-4">
+            SmartPoultry Hub
+          </h2>
         </div>
 
         {/* Navigation Links */}
@@ -39,94 +51,163 @@ const Dashboard = () => {
             className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
           >
             <i className="fas fa-home"></i>
-            <span className="text-lg">Home</span>
+            <span className="text-sm md:text-lg">Home</span>
           </Link>
           <Link
             href="/products"
             className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
           >
             <i className="fas fa-box"></i>
-            <span className="text-lg">Products</span>
+            <span className="text-sm md:text-lg">Products</span>
           </Link>
           <Link
             href="/orders"
             className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
           >
             <i className="fas fa-shopping-cart"></i>
-            <span className="text-lg">Orders</span>
+            <span className="text-sm md:text-lg">Profile</span>
           </Link>
           <Link
             href="/analytics"
             className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
           >
             <i className="fas fa-chart-line"></i>
-            <span className="text-lg">Analytics</span>
+            <span className="text-sm md:text-lg">Analytics</span>
           </Link>
           <Link
             href="/reviews"
             className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
           >
             <i className="fas fa-star"></i>
-            <span className="text-lg">Reviews</span>
+            <span className="text-sm md:text-lg">History</span>
           </Link>
           <Link
             href="/settings"
             className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
           >
             <i className="fas fa-cog"></i>
-            <span className="text-lg">Settings</span>
+            <span className="text-sm md:text-lg">Settings</span>
           </Link>
           <Link
             href="/profile"
             className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
           >
             <i className="fas fa-user"></i>
-            <span className="text-lg">Profile</span>
+            <span className="text-sm md:text-lg">Profile</span>
           </Link>
         </nav>
       </aside>
 
+      {/* Menu Button for Small Screens */}
+      <button
+        onClick={toggleMenu}
+        className="block md:hidden bg-blue-500 text-white p-2 rounded-full absolute top-4 right-4 z-20"
+      >
+        <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
+      </button>
+
       {/* Main Content */}
-      <main className="flex-1 p-6">
-        <h1 className="text-3xl font-bold mb-8">Dashboard Overview</h1>
+      <main className="flex-1 p-4 md:p-6 ">
+        <div className="px-2 py-1 ">
+          <h1 className="text-xl md:text-3xl font-bold mb-4 md:mb-8">
+            Dashboard Overview
+          </h1>
+        </div>
 
         {/* Card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {/* Card 1 */}
           <button onClick={handleFlockManagement}>
-            <div className="bg-white p-6 rounded shadow text-center">
-              <img src="/FlockManagement.png" />
-              <h3 className="text-xl font-semibold mt-2">Flock Management</h3>
-              <p className="mt-1">Details about flock management.</p>
+            <div className=" md:p-1 rounded-lg shadow-lg text-center ">
+              <div>
+                <img
+                  src="/FlockManagement.png"
+                  className="mx-auto w-full h-56 object-cover rounded"
+                />
+              </div>
+              <div className="mt-3 mb-4">
+                <h3 className="text-lg md:text-xl font-semibold mt-2">
+                  Flock Management
+                </h3>
+                <p className="mt-1 text-sm md:text-base">
+                  Details about flock management.
+                </p>
+              </div>
             </div>
           </button>
 
           {/* Card 2 */}
-          <div className="bg-white p-6 rounded shadow text-center">
-            <img src="/mainHero1.png" />
-            <h3 className="text-xl font-semibold">Feed & Water Tracking</h3>
-            <p>Track feed and water usage.</p>
+          <button onClick={handleFlockFeedAndWater}>
+          <div className="bg-white md:p-1 rounded-lg shadow-lg text-center">
+            <div>
+              <img
+                src="/FeedWaterTracking.png"
+                className="mx-auto w-full h-56 object-cover rounded"
+              />
+            </div>
+            <div className="mt-3 mb-4">
+              <h3 className="text-lg md:text-xl font-semibold mt-2">
+                Feed & Water Tracking
+              </h3>
+              <p className="mt-1 text-sm md:text-base">
+                Track feed and water usage.
+              </p>
+            </div>
           </div>
+          </button>
 
           {/* Card 3 */}
-          <div className="bg-white p-6 rounded shadow text-center">
-            <img src="/mainHero1.png" />
-            <h3 className="text-xl font-semibold">Growth Monitoring</h3>
-            <p>Monitor growth and health.</p>
+          <div className="bg-white md:p-1 rounded-lg shadow-lg text-center">
+            <div>
+              <img
+                src="/GrowthMonitoring.png"
+                className="mx-auto w-full h-56 object-cover rounded"
+              />
+            </div>
+            <div className="mt-3 mb-4">
+              <h3 className="text-lg md:text-xl font-semibold mt-2">
+                Growth Monitoring
+              </h3>
+              <p className="mt-1 text-sm md:text-base">
+                Monitor growth and health.
+              </p>
+            </div>
           </div>
 
           {/* Card 4 */}
-          <div className="bg-white p-6 rounded shadow text-center">
-            <img src="/mainHero1.png" />
-            <h3 className="text-xl font-semibold">Expense Tracking</h3>
-            <p>Record expenses and income.</p>
+          <div className="bg-white md:p-1 rounded-lg shadow-lg text-center">
+            <div>
+              <img
+                src="/ExpenseTracking.png"
+                className="mx-auto w-full h-56 object-cover rounded"
+              />
+            </div>
+            <div className="mt-3 mb-4">
+              <h3 className="text-lg md:text-xl font-semibold mt-2">
+                Expense Tracking
+              </h3>
+              <p className="mt-1 text-sm md:text-base">
+                Record expenses and income.
+              </p>
+            </div>
           </div>
 
           {/* Card 5 */}
-          <div className="bg-white p-6 rounded shadow text-center">
-            <img src="/mainHero1.png" />
-            <h3 className="text-xl font-semibold">Health Monitoring</h3>
-            <p>Manage health and vaccinations.</p>
+          <div className="bg-white md:p-1 rounded-lg shadow-lg text-center">
+            <div>
+              <img
+                src="/HealthMonitoring.png"
+                className="mx-auto w-full h-56 object-cover rounded"
+              />
+            </div>
+            <div className="mt-3 mb-4">
+              <h3 className="text-lg md:text-xl font-semibold mt-2">
+                Health Monitoring
+              </h3>
+              <p className="mt-1 text-sm md:text-base">
+                Manage health and vaccinations.
+              </p>
+            </div>
           </div>
         </div>
       </main>

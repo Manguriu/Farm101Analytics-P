@@ -1,16 +1,14 @@
-// 
-
-
-
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import MainHeader from "./MainHeader";
 import HeroCountDown from "./HeroCountDown";
+
+
 
 export default function MainHero() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0); // Index of the current video
@@ -18,14 +16,10 @@ export default function MainHero() {
 
   const videos = ["/Pvideo1.mp4", "/Pvideo2.mp4", "/Pvideo3.mp4", "/Pvideo4.mp4"]; // Video sources
 
-  useEffect(() => {
-    // Interval to change the video
-    const interval = setInterval(() => {
-      setCurrentVideoIndex((prev) => (prev + 1) % videos.length); // Move to the next video
-    }, 10000); // Change video every 10 seconds
-
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, [videos]);
+  const handleScreenClick = () => {
+    // Change to the next video in the array
+    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+  };
 
   const router = useRouter();
 
@@ -34,7 +28,10 @@ export default function MainHero() {
   };
 
   return (
-    <div className="relative h-screen flex flex-col bg-gradient-to-b from-blue-800 to-gray-900">
+    <div
+      className="relative h-screen flex flex-col bg-gradient-to-b from-blue-800 to-gray-900"
+      onClick={handleScreenClick} // Trigger video change on click
+    >
       {/* Static Placeholder */}
       {!isVideoLoaded && (
         <img
@@ -44,24 +41,18 @@ export default function MainHero() {
         />
       )}
 
-      {/* Background Videos with Crossfade Effect */}
-      {videos.map((video, index) => (
-        <video
-          key={index}
-          className={`absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-1000 ${
-            index === currentVideoIndex
-              ? "opacity-100 z-0"
-              : "opacity-0 z-10"
-          }`}
-          autoPlay
-          muted
-          loop
-          onLoadedData={() => setIsVideoLoaded(true)} // Set loading state to true when video is ready
-          preload="auto" // Preload video for faster start
-        >
-          <source src={video} type="video/mp4" />
-        </video>
-      ))}
+      {/* Active Video */}
+      <video
+        key={currentVideoIndex} // Ensures the video reloads on index change
+        className="absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-1000"
+        autoPlay
+        muted
+        loop
+        onLoadedData={() => setIsVideoLoaded(true)} // Set loading state to true when video is ready
+        preload="auto" // Preload video for faster start
+      >
+        <source src={videos[currentVideoIndex]} type="video/mp4" />
+      </video>
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -103,6 +94,7 @@ export default function MainHero() {
           <HeroCountDown />
         </div>
       </div>
+      
     </div>
   );
 }

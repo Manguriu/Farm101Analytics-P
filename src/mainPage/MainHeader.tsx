@@ -15,7 +15,7 @@ export default function MainHeader() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-20 bg-black bg-opacity-70 backdrop-blur-md shadow-md">
+    <header className="top-0 left-0 right-0 z-20 bg-black bg-opacity-70 backdrop-blur-md shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         {/* Logo */}
         <div
