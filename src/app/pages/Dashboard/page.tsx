@@ -1,218 +1,121 @@
-"use client";
-
+/* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
+'use client'
 
-import React, { useState } from "react";
+import { useState } from 'react'
+import { 
+  HomeIcon, ChartBarIcon, CogIcon, PlusIcon, 
+   BeakerIcon} from '@heroicons/react/outline'
+import Stats from './Stats'
+import MainFeatures from './MainFeatures'
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 
-
-const Dashboard = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Toggle for the dropdown menu
+export default function Dashboard() {
 
   const router = useRouter();
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
 
   const handleFlockManagement = () => {
     router.push("/pages/FlockManagement");
   };
 
-  const handleFlockFeedAndWater = () => {
-    router.push("/pages/FeedWaterTracking");
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
-
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-grey-100">
-      {/* Sidebar / Dropdown Menu */}
-      <aside
-        className={`${
-          isMenuOpen ? "block" : "hidden"
-        } md:block bg-gradient-to-b from-blue-800 to-gray-900 text-white flex flex-col w-full md:w-64 p-4 md:p-6 absolute md:static z-10`}
-      >
-        {/* Logo Section */}
-        <div className="flex items-center mb-8">
-          {/* <div className="w-10 h-10 rounded-full flex justify-center items-center">
-            <span className="text-white text-xl font-bold"><i className="fas fa-bars"></i></span>
-          </div> */}
-          <h2 className="text-lg md:text-2xl font-bold ml-4">
-            SmartPoultry Hub
-          </h2>
+    <div className="flex h-screen overflow-hidden bg-gray-100">
+      {/* Sidebar */}
+      <aside className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} fixed inset-y-0 left-0 z-50 w-64 bg-blue-700 text-white transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}>
+        <div className="flex items-center justify-between p-4 border-b border-blue-600">
+          <div className="flex items-center space-x-2">
+            <BeakerIcon className="h-8 w-8" />
+            <span className="text-xl font-bold">SmartPoultry</span>
+          </div>
+          <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden">
+            <BeakerIcon className="h-6 w-6" />
+          </button>
         </div>
-
-        {/* Navigation Links */}
-        <nav className="flex flex-col space-y-4">
-          <Link
-            href="/"
-            className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
-          >
-            <i className="fas fa-home"></i>
-            <span className="text-sm md:text-lg">Home</span>
-          </Link>
-          <Link
-            href="/products"
-            className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
-          >
-            <i className="fas fa-box"></i>
-            <span className="text-sm md:text-lg">Products</span>
-          </Link>
-          <Link
-            href="/orders"
-            className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
-          >
-            <i className="fas fa-shopping-cart"></i>
-            <span className="text-sm md:text-lg">Profile</span>
-          </Link>
-          <Link
-            href="/analytics"
-            className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
-          >
-            <i className="fas fa-chart-line"></i>
-            <span className="text-sm md:text-lg">Analytics</span>
-          </Link>
-          <Link
-            href="/reviews"
-            className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
-          >
-            <i className="fas fa-star"></i>
-            <span className="text-sm md:text-lg">History</span>
-          </Link>
-          <Link
-            href="/settings"
-            className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
-          >
-            <i className="fas fa-cog"></i>
-            <span className="text-sm md:text-lg">Settings</span>
-          </Link>
-          <Link
-            href="/profile"
-            className="flex items-center gap-4 text-gray-400 hover:text-yellow-500 transition"
-          >
-            <i className="fas fa-user"></i>
-            <span className="text-sm md:text-lg">Profile</span>
-          </Link>
+        <nav className="mt-5 px-2">
+          <a href="/" className="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-blue-800 focus:outline-none focus:bg-blue-900 transition ease-in-out duration-150">
+            <HomeIcon className="mr-4 h-6 w-6" />
+            Home
+          </a>
+          <a href="#" className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-blue-100 hover:text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition ease-in-out duration-150">
+            <ChartBarIcon className="mr-4 h-6 w-6" />
+            Flock Management
+          </a>
+          <a href="#" className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-blue-100 hover:text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition ease-in-out duration-150">
+            <CogIcon className="mr-4 h-6 w-6" />
+            Feed & Water
+          </a>
+          <a href="#" className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-blue-100 hover:text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition ease-in-out duration-150">
+            <ChartBarIcon className="mr-4 h-6 w-6" />
+            Growth Analytics
+          </a>
+          <a href="#" className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-blue-100 hover:text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition ease-in-out duration-150">
+            <CogIcon className="mr-4 h-6 w-6" />
+            Financial Tracking
+          </a>
+          <a href="#" className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-blue-100 hover:text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition ease-in-out duration-150">
+            <ChartBarIcon className="mr-4 h-6 w-6" />
+            Health Monitoring
+          </a>
+          <a href="#" className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-blue-100 hover:text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition ease-in-out duration-150">
+            <ChartBarIcon className="mr-4 h-6 w-6" />
+            Reports & Insights
+          </a>
+          <a href="#" className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-blue-100 hover:text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition ease-in-out duration-150">
+            <CogIcon className="mr-4 h-6 w-6" />
+            Settings
+          </a>
         </nav>
+        <div className="absolute bottom-0 w-full">
+          <div className="flex items-center px-4 py-3 border-t border-blue-600">
+            <img className="h-8 w-8 rounded-full" src="/placeholder.svg?height=32&width=32" alt="" />
+            <div className="ml-3">
+              <p className="text-sm font-medium text-white">John Smith</p>
+              <p className="text-xs font-medium text-blue-300">View profile</p>
+            </div>
+          </div>
+        </div>
       </aside>
 
-      {/* Menu Button for Small Screens */}
-      <button
-        onClick={toggleMenu}
-        className="block md:hidden bg-blue-500 text-white p-2 rounded-full absolute top-4 right-4 z-20"
-      >
-        <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
-      </button>
-
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-6 ">
-        <div className="px-2 py-1 ">
-          <h1 className="text-xl md:text-3xl font-bold mb-4 md:mb-8">
-            Dashboard Overview
-          </h1>
-        </div>
-
-        {/* Card Grid */}
-        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {/* Card 1 */}
-          <button onClick={handleFlockManagement}>
-            <div className=" md:p-1 rounded-lg shadow-lg text-center ">
-              <div>
-                <img
-                  src="/FlockManagement.png"
-                  className="mx-auto w-full h-56 object-cover rounded"
-                />
+      <div className="flex-1 overflow-auto">
+        <header className="bg-white shadow-sm lg:static lg:overflow-y-visible">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
+              <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
+                <div className="flex-shrink-0 flex items-center">
+                  <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden">
+                    <BeakerIcon className="block h-6 w-6" aria-hidden="true" />
+                  </button>
+                  <h1 className="ml-3 text-2xl font-bold text-gray-900">Dashboard</h1>
+                </div>
               </div>
-              <div className="mt-3 mb-4">
-                <h3 className="text-lg md:text-xl font-semibold mt-2">
-                  Flock Management
-                </h3>
-                <p className="mt-1 text-sm md:text-base">
-                  Details about flock management.
-                </p>
+              <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
+                <div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+                  <button onClick={handleFlockManagement} className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <PlusIcon className="h-5 w-5 mr-2" />
+                    Add New Flock
+                  </button>
+                </div>
               </div>
             </div>
-          </button>
+          </div>
+        </header>
 
-          {/* Card 2 */}
-          <button onClick={handleFlockFeedAndWater}>
-          <div className="bg-white md:p-1 rounded-lg shadow-lg text-center">
-            <div>
-              <img
-                src="/FeedWaterTracking.png"
-                className="mx-auto w-full h-56 object-cover rounded"
-              />
-            </div>
-            <div className="mt-3 mb-4">
-              <h3 className="text-lg md:text-xl font-semibold mt-2">
-                Feed & Water Tracking
-              </h3>
-              <p className="mt-1 text-sm md:text-base">
-                Track feed and water usage.
-              </p>
+        <main className="flex-1 relative overflow-y-auto focus:outline-none">
+          <div className="py-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+              {/* Stats Overview */}
+              <Stats />
+
+              {/* Main Features */}
+              <MainFeatures />
             </div>
           </div>
-          </button>
-
-          {/* Card 3 */}
-          <div className="bg-white md:p-1 rounded-lg shadow-lg text-center">
-            <div>
-              <img
-                src="/GrowthMonitoring.png"
-                className="mx-auto w-full h-56 object-cover rounded"
-              />
-            </div>
-            <div className="mt-3 mb-4">
-              <h3 className="text-lg md:text-xl font-semibold mt-2">
-                Growth Monitoring
-              </h3>
-              <p className="mt-1 text-sm md:text-base">
-                Monitor growth and health.
-              </p>
-            </div>
-          </div>
-
-          {/* Card 4 */}
-          <div className="bg-white md:p-1 rounded-lg shadow-lg text-center">
-            <div>
-              <img
-                src="/ExpenseTracking.png"
-                className="mx-auto w-full h-56 object-cover rounded"
-              />
-            </div>
-            <div className="mt-3 mb-4">
-              <h3 className="text-lg md:text-xl font-semibold mt-2">
-                Expense Tracking
-              </h3>
-              <p className="mt-1 text-sm md:text-base">
-                Record expenses and income.
-              </p>
-            </div>
-          </div>
-
-          {/* Card 5 */}
-          <div className="bg-white md:p-1 rounded-lg shadow-lg text-center">
-            <div>
-              <img
-                src="/HealthMonitoring.png"
-                className="mx-auto w-full h-56 object-cover rounded"
-              />
-            </div>
-            <div className="mt-3 mb-4">
-              <h3 className="text-lg md:text-xl font-semibold mt-2">
-                Health Monitoring
-              </h3>
-              <p className="mt-1 text-sm md:text-base">
-                Manage health and vaccinations.
-              </p>
-            </div>
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
-  );
-};
-
-export default Dashboard;
+  )
+}
