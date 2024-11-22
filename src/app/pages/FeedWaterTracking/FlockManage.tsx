@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ChartBarIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
+import Dashsidebar from '../Dashboard/Dashsidebar';
 
 interface Flock {
   id: string;
@@ -56,8 +57,9 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-emerald-50 to-orange-50 p-6">
+      <Dashsidebar />
       <ToastContainer />
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6 lg:ml-64">
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">

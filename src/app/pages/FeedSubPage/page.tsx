@@ -5,6 +5,7 @@ import { format, startOfWeek, startOfMonth } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Dashsidebar from "../Dashboard/Dashsidebar";
 
 interface DailySummary {
   id: string;
@@ -189,8 +190,9 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-emerald-50 to-purple-50 p-6">
+      <Dashsidebar />
       <ToastContainer />
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6 lg:ml-64">
         {/* Form */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">
