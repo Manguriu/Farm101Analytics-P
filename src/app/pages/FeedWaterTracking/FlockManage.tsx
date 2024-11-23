@@ -1,13 +1,18 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { differenceInDays } from 'date-fns';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ChartBarIcon, ExclamationCircleIcon } from '@heroicons/react/outline';
-import Dashsidebar from '../Dashboard/Dashsidebar';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { differenceInDays } from "date-fns";
+import { motion, AnimatePresence } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  ChartBarIcon,
+  ExclamationCircleIcon,
+  PencilIcon,
+  TrashIcon,
+} from "@heroicons/react/outline";
+import Dashsidebar from "../Dashboard/Dashsidebar";
 
 interface Flock {
   id: string;
@@ -15,27 +20,44 @@ interface Flock {
   startDate: Date;
   currentCount: number;
   breed: string;
-  feedLevel: number;
-  waterLevel: number;
-  dailyFeedIntake: number;
-  dailyWaterIntake: number;
   lastUpdated: Date;
 }
 
 export default function Component() {
   const router = useRouter();
 
+  // "Db data example this data is from the add stock"
   const [flocks, setFlocks] = useState<Flock[]>([
     {
-      id: '1',
-      batchName: 'Spring Batch 2024',
+      id: "1",
+      batchName: "Spring Batch 2024",
       startDate: new Date(2024, 0, 1),
-      currentCount: 16,
-      breed: 'Broiler Ross 308',
-      feedLevel: 75,
-      waterLevel: 82,
-      dailyFeedIntake: 120,
-      dailyWaterIntake: 240,
+      currentCount: 100,
+      breed: "Broiler Ross 308",
+      lastUpdated: new Date(),
+    },
+    {
+      id: "2",
+      batchName: "Spring Bah 2024",
+      startDate: new Date(2024, 0, 1),
+      currentCount: 1600,
+      breed: "Broiler Ross 308",
+      lastUpdated: new Date(),
+    },
+    {
+      id: "3",
+      batchName: "sumer Bah 2024",
+      startDate: new Date(2024, 0, 1),
+      currentCount: 1600,
+      breed: "Broiler Ross 308",
+      lastUpdated: new Date(),
+    },
+    {
+      id: "4",
+      batchName: "dchristmas Bah 2024",
+      startDate: new Date(2024, 0, 1),
+      currentCount: 1600,
+      breed: "Broiler Ross 308",
       lastUpdated: new Date(),
     },
   ]);
@@ -43,20 +65,30 @@ export default function Component() {
   const handleDelete = (id: string) => {
     if (
       confirm(
-        'Are you sure you want to delete this flock? This action cannot be undone.'
+        "Are you sure you want to delete this flock? This action cannot be undone."
       )
     ) {
       setFlocks((prev) => prev.filter((flock) => flock.id !== id));
-      toast.success('Flock deleted successfully');
+      toast.success("Flock deleted successfully");
     }
   };
 
-  const handleFlockFeedAndWater = () => {
-    router.push('/pages/FeedSubPage');
-  };
+  
 
+  const handleFlockFeedAndWater = (flock: Flock) => {
+    router.push(
+      `/pages/FeedSubPage?id=${flock.id}&batchName=${encodeURIComponent(
+        flock.batchName
+      )}&currentCount=${flock.currentCount}&breed=${encodeURIComponent(
+        flock.breed || "Unknown"
+      )}&startDate=${encodeURIComponent(new Date(flock.startDate).toISOString())}`
+    );
+  };
+  
+
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-emerald-50 to-orange-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-emerald-50 to-orange-50 p-6">
       <Dashsidebar />
       <ToastContainer />
       <div className="max-w-7xl mx-auto space-y-6 lg:ml-64">
@@ -86,7 +118,7 @@ export default function Component() {
             <div className="relative w-full h-2 bg-gray-200 rounded-full mt-2">
               <div
                 className="absolute h-full bg-orange-500 rounded-full"
-                style={{ width: '65%' }}
+                style={{ width: "65%" }}
               />
             </div>
           </div>
@@ -104,7 +136,7 @@ export default function Component() {
             <div className="relative w-full h-2 bg-gray-200 rounded-full mt-2">
               <div
                 className="absolute h-full bg-blue-500 rounded-full"
-                style={{ width: '82%' }}
+                style={{ width: "82%" }}
               />
             </div>
           </div>
@@ -122,7 +154,7 @@ export default function Component() {
             <div className="relative w-full h-2 bg-gray-200 rounded-full mt-2">
               <div
                 className="absolute h-full bg-emerald-500 rounded-full"
-                style={{ width: '75%' }}
+                style={{ width: "75%" }}
               />
             </div>
           </div>
@@ -140,7 +172,7 @@ export default function Component() {
             <div className="relative w-full h-2 bg-gray-200 rounded-full mt-2">
               <div
                 className="absolute h-full bg-purple-500 rounded-full"
-                style={{ width: '94%' }}
+                style={{ width: "94%" }}
               />
             </div>
           </div>
@@ -165,7 +197,11 @@ export default function Component() {
                         {flock.batchName}
                       </h3>
                       <p className="text-sm text-gray-500">
-                        Age: {differenceInDays(new Date(), flock.startDate)} days
+                        Age: {differenceInDays(new Date(), flock.startDate)}{" "}
+                        days
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Breed: {flock.breed}
                       </p>
                     </div>
                     <div className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded">
@@ -173,28 +209,24 @@ export default function Component() {
                     </div>
                   </div>
                 </div>
-                <div className="p-4">
-                  <p className="text-sm text-gray-600">
-                    Feed Level: {flock.feedLevel}%, Daily Feed:{' '}
-                    {flock.dailyFeedIntake}g/bird
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Water Level: {flock.waterLevel}%, Daily Water:{' '}
-                    {flock.dailyWaterIntake}ml/bird
-                  </p>
-                </div>
-                <div className="flex justify-between p-4 bg-gray-50">
+                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow">
+                  {/* Manage Button */}
                   <button
-                    onClick={handleFlockFeedAndWater}
-                    className="text-blue-600 hover:text-blue-800 text-sm"
+                    // onClick={handleFlockFeedAndWater}
+                    onClick= {() => handleFlockFeedAndWater(flock)}
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 hover:scale-105 hover:shadow-lg transition-transform duration-300 ease-in-out"
                   >
-                    Manage
+                    <PencilIcon className="h-5 w-5" />
+                    <span className="font-medium">Manage</span>
                   </button>
+
+                  {/* Delete Button */}
                   <button
                     onClick={() => handleDelete(flock.id)}
-                    className="text-red-600 hover:text-red-800 text-sm"
+                    className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-gradient-to-r hover:from-red-600 hover:to-red-500 hover:scale-105 hover:shadow-lg transition-transform duration-300 ease-in-out"
                   >
-                    Delete
+                    <TrashIcon className="h-5 w-5" />
+                    <span className="font-medium">Delete</span>
                   </button>
                 </div>
               </motion.div>

@@ -6,6 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dashsidebar from "../Dashboard/Dashsidebar";
+// import { useRouter } from "next/navigation";
+import Feedsubheader from "./Feedsubheader";
+import { ScaleIcon, HeartIcon, CalendarIcon } from "@heroicons/react/outline"
 
 interface DailySummary {
   id: string;
@@ -39,7 +42,9 @@ export default function Component() {
     },
   ]);
 
-  const [editingSummary, setEditingSummary] = useState<DailySummary | null>(null);
+  const [editingSummary, setEditingSummary] = useState<DailySummary | null>(
+    null
+  );
   const [formData, setFormData] = useState({
     day: "",
     date: format(new Date(), "yyyy-MM-dd"),
@@ -53,7 +58,9 @@ export default function Component() {
     e.preventDefault();
 
     const newSummary: DailySummary = {
-      id: editingSummary ? editingSummary.id : Math.random().toString(36).substr(2, 9),
+      id: editingSummary
+        ? editingSummary.id
+        : Math.random().toString(36).substr(2, 9),
       day: parseInt(formData.day, 10),
       date: new Date(formData.date),
       avgWeight: parseFloat(formData.avgWeight),
@@ -64,7 +71,9 @@ export default function Component() {
 
     if (editingSummary) {
       setSummaries((prev) =>
-        prev.map((summary) => (summary.id === editingSummary.id ? newSummary : summary))
+        prev.map((summary) =>
+          summary.id === editingSummary.id ? newSummary : summary
+        )
       );
       toast.success("Summary updated successfully");
       setEditingSummary(null);
@@ -193,9 +202,10 @@ export default function Component() {
       <Dashsidebar />
       <ToastContainer />
       <div className="max-w-7xl mx-auto space-y-6 lg:ml-64">
+        <Feedsubheader />
         {/* Form */}
         <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-xl font-semibold mb-4 text-center justify-center">
             {editingSummary ? "Edit Summary" : "Add Summary"}
           </h2>
           <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2">
@@ -205,7 +215,9 @@ export default function Component() {
                 type="number"
                 className="w-full px-3 py-2 border rounded"
                 value={formData.day}
-                onChange={(e) => setFormData({ ...formData, day: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, day: e.target.value })
+                }
                 required
               />
             </div>
@@ -215,37 +227,51 @@ export default function Component() {
                 type="date"
                 className="w-full px-3 py-2 border rounded"
                 value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, date: e.target.value })
+                }
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Avg Weight (kg)</label>
+              <label className="block text-sm font-medium">
+                Avg Weight (kg)
+              </label>
               <input
                 type="number"
                 className="w-full px-3 py-2 border rounded"
                 value={formData.avgWeight}
-                onChange={(e) => setFormData({ ...formData, avgWeight: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, avgWeight: e.target.value })
+                }
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Total Feed (kg)</label>
+              <label className="block text-sm font-medium">
+                Total Feed (kg)
+              </label>
               <input
                 type="number"
                 className="w-full px-3 py-2 border rounded"
                 value={formData.totalFeed}
-                onChange={(e) => setFormData({ ...formData, totalFeed: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, totalFeed: e.target.value })
+                }
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Total Water (L)</label>
+              <label className="block text-sm font-medium">
+                Total Water (L)
+              </label>
               <input
                 type="number"
                 className="w-full px-3 py-2 border rounded"
                 value={formData.totalWater}
-                onChange={(e) => setFormData({ ...formData, totalWater: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, totalWater: e.target.value })
+                }
                 required
               />
             </div>
@@ -255,12 +281,17 @@ export default function Component() {
                 type="number"
                 className="w-full px-3 py-2 border rounded"
                 value={formData.deaths}
-                onChange={(e) => setFormData({ ...formData, deaths: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, deaths: e.target.value })
+                }
                 required
               />
             </div>
             <div className="col-span-2 flex justify-end">
-              <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+              >
                 {editingSummary ? "Update" : "Add"}
               </button>
             </div>
@@ -268,69 +299,148 @@ export default function Component() {
         </div>
 
         {/* Daily Summaries */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Daily Summaries</h2>
-          <AnimatePresence>
-            {summaries.map((summary) => (
-              <motion.div
-                key={summary.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="mb-4 p-4 border rounded"
-              >
-                <div className="flex justify-between">
-                  <div>
-                    <h3 className="font-semibold">Day {summary.day}</h3>
-                    <p>{format(summary.date, "MMM d, yyyy")}</p>
-                  </div>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleEdit(summary)}
-                      className="text-blue-600 hover:text-blue-800"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(summary.id)}
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+
+<div className="bg-gradient-to-br from-blue-50 to-gray-50 shadow-lg rounded-xl p-6">
+  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
+    Daily Summaries
+  </h2>
+  <AnimatePresence>
+    {summaries.map((summary) => (
+      <motion.div
+        key={summary.id}
+        initial={{ opacity: 0, translateY: 20 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        exit={{ opacity: 0, translateY: 20 }}
+        className="mb-4 p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out"
+      >
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-1">
+              Day {summary.day}
+            </h3>
+            <p className="text-sm text-gray-600">{format(summary.date, "MMM d, yyyy")}</p>
+          </div>
+          <div className="flex space-x-3">
+            <button
+              onClick={() => handleEdit(summary)}
+              className="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-150 ease-in-out"
+            >
+              <span>Edit</span>
+            </button>
+            <button
+              onClick={() => handleDelete(summary.id)}
+              className="flex items-center gap-1 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-150 ease-in-out"
+            >
+              <span>Delete</span>
+            </button>
+          </div>
         </div>
+      </motion.div>
+    ))}
+  </AnimatePresence>
+</div>
+
 
         {/* Weekly Summaries */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Weekly Summaries</h2>
-          {getWeeklySummaries().map((week, index) => (
-            <div key={index} className="mb-4 p-4 border rounded">
-              <h3 className="font-semibold">Week of {format(week.startDate, "MMM d")}</h3>
-              <p>Avg Weight: {week.avgWeight.toFixed(2)} kg</p>
-              <p>Total Feed: {week.totalFeed} kg</p>
-              <p>Total Water: {week.totalWater} L</p>
-              <p>Deaths: {week.deaths}</p>
-            </div>
-          ))}
+
+<div className="bg-gradient-to-br from-green-50 to-gray-50 shadow-lg rounded-xl p-6">
+  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
+    Weekly Summaries
+  </h2>
+  <div className="space-y-4">
+    {getWeeklySummaries().map((week, index) => (
+      <div
+        key={index}
+        className="p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out border-l-4 border-green-500"
+      >
+        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+          <CalendarIcon className="h-5 w-5 text-green-500" />
+          Week of {format(week.startDate, "MMM d")}
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+          <div className="flex items-center gap-2">
+            <ScaleIcon className="h-5 w-5 text-blue-500" />
+            <p className="text-gray-700">
+              <span className="font-medium text-gray-800">Avg Weight:</span>{" "}
+              {week.avgWeight.toFixed(2)} kg
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <CalendarIcon className="h-5 w-5 text-blue-400" />
+            <p className="text-gray-700">
+              <span className="font-medium text-gray-800">Total Feed:</span>{" "}
+              {week.totalFeed} kg
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <CalendarIcon className="h-5 w-5 text-teal-500" />
+            <p className="text-gray-700">
+              <span className="font-medium text-gray-800">Total Water:</span>{" "}
+              {week.totalWater} L
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <HeartIcon className="h-5 w-5 text-red-500" />
+            <p className="text-gray-700">
+              <span className="font-medium text-gray-800">Deaths:</span> {week.deaths}
+            </p>
+          </div>
         </div>
+      </div>
+    ))}
+  </div>
+</div>
+
 
         {/* Monthly Summaries */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Monthly Summaries</h2>
-          {getMonthlySummaries().map((month, index) => (
-            <div key={index} className="mb-4 p-4 border rounded">
-              <h3 className="font-semibold">Month: {format(month.startDate, "MMM yyyy")}</h3>
-              <p>Avg Weight: {month.avgWeight.toFixed(2)} kg</p>
-              <p>Total Feed: {month.totalFeed} kg</p>
-              <p>Total Water: {month.totalWater} L</p>
-              <p>Deaths: {month.deaths}</p>
-            </div>
-          ))}
+        <div className="bg-gradient-to-br from-yellow-50 to-gray-50 shadow-lg rounded-xl p-6">
+  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
+    Monthly Summaries
+  </h2>
+  <div className="space-y-4">
+    {getMonthlySummaries().map((month, index) => (
+      <div
+        key={index}
+        className="p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out border-l-4 border-yellow-500"
+      >
+        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+          <CalendarIcon className="h-5 w-5 text-yellow-500" />
+          Month: {format(month.startDate, "MMM yyyy")}
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+          <div className="flex items-center gap-2">
+            <ScaleIcon className="h-5 w-5 text-blue-500" />
+            <p className="text-gray-700">
+              <span className="font-medium text-gray-800">Avg Weight:</span>{" "}
+              {month.avgWeight.toFixed(2)} kg
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <HeartIcon className="h-5 w-5 text-blue-400" />
+            <p className="text-gray-700">
+              <span className="font-medium text-gray-800">Total Feed:</span>{" "}
+              {month.totalFeed} kg
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <HeartIcon className="h-5 w-5 text-teal-500" />
+            <p className="text-gray-700">
+              <span className="font-medium text-gray-800">Total Water:</span>{" "}
+              {month.totalWater} L
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <HeartIcon className="h-5 w-5 text-red-500" />
+            <p className="text-gray-700">
+              <span className="font-medium text-gray-800">Deaths:</span>{" "}
+              {month.deaths}
+            </p>
+          </div>
         </div>
+      </div>
+    ))}
+  </div>
+</div>
       </div>
     </div>
   );

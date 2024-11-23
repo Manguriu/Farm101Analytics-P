@@ -5,10 +5,11 @@
 
 import { 
   PlusIcon} from '@heroicons/react/outline'
-import Stats from './Stats'
+// import Stats from '../GrowthMonitoring/Stats'
 import MainFeatures from './MainFeatures'
 import { useRouter } from "next/navigation";
 import Dashsidebar from './Dashsidebar';
+import MaindashStats from './MaindashStats';
 
 export default function Dashboard() {
 
@@ -48,7 +49,7 @@ export default function Dashboard() {
       <main className="flex-1 relative overflow-y-auto">
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Stats />
+            <MaindashStats />
             <MainFeatures />
           </div>
         </div>
