@@ -1,9 +1,11 @@
 import React from "react";
 import { useSearchParams } from "next/navigation";
 import { UserGroupIcon, CalendarIcon, IdentificationIcon } from '@heroicons/react/outline';
+import { Suspense } from 'react';
 
 
-export default function Feedsubheader() {
+function FeedSubPageContent (){
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const searchParams = useSearchParams();
 
@@ -44,3 +46,11 @@ export default function Feedsubheader() {
     
   );
 }
+export default function Feedsubheader() {
+
+  return(
+    <Suspense fallback={<p className="text-center text-gray-500">Loading...</p>}>
+      <FeedSubPageContent />
+    </Suspense>
+
+  )}
