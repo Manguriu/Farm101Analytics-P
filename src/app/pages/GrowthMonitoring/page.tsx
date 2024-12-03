@@ -1,24 +1,3 @@
-// "use client"
-
-// import React from 'react'
-// import Stats from './Stats'
-// import Dashsidebar from '../Dashboard/Dashsidebar'
-
-
-
-// export default function page() {
-//   return (
-//     <div className="flex h-screen bg-gray-100">
-//         <Dashsidebar/>
-//         <div className='flex-1 lg:ml-64 mt-4 p-4'>
-//         <Stats />
-        
-//         </div>
-//     </div>
-//   )
-// }
-
-
 'use client';
 
 import { useState } from 'react';

@@ -27,9 +27,14 @@ export default function Dashsidebar() {
       icon: ChartBarIcon,
     },
     { href: "/pages/FeedWaterTracking", label: "Feed & Water", icon: CogIcon },
+    // {
+    //   href: "/pages/GrowthMonitoring",
+    //   label: "Growth Analytics",
+    //   icon: ChartBarIcon,
+    // },
     {
-      href: "/pages/GrowthMonitoring",
-      label: "Growth Analytics",
+      href: "/pages/MainMonitoring",
+      label: "Monitoring",
       icon: ChartBarIcon,
     },
     {
@@ -37,11 +42,11 @@ export default function Dashsidebar() {
       label: "Financial Tracking",
       icon: CogIcon,
     },
-    {
-      href: "/pages/HealthMonitoring",
-      label: "Health Monitoring",
-      icon: ChartBarIcon,
-    },
+    // {
+    //   href: "/pages/HealthMonitoring",
+    //   label: "Health Monitoring",
+    //   icon: ChartBarIcon,
+    // },
     {
       href: "/pages/ReportsAndInsights",
       label: "Reports & Insights",

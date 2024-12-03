@@ -61,12 +61,20 @@ export default function MainHeader() {
         </nav>
 
         {/* Call-to-Action Button */}
-        <div className="hidden md:flex">
+        <div className="hidden md:flex gap-2">
           <button
             onClick={() => router.push("/pages/Dashboard")}
             className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-full shadow-lg transform hover:scale-105 transition"
           >
             Get Started
+          </button>
+
+
+          <button
+            onClick={() => router.push("/pages/LoginPage")}
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-full shadow-lg transform hover:scale-105 transition"
+          >
+            Login
           </button>
         </div>
 
