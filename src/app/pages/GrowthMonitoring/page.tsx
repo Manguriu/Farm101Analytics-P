@@ -15,6 +15,7 @@ import {
 } from 'chart.js';
 import { PencilIcon, TrashIcon, PlusCircleIcon } from '@heroicons/react/outline';
 import Dashsidebar from '../Dashboard/Dashsidebar';
+import GrowthHeader from './GrowthHeader';
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
@@ -128,6 +129,7 @@ export default function GrowthMonitoring() {
         <Dashsidebar />
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header Section */}
+        <GrowthHeader />
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">

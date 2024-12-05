@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import {
-  ChartBarIcon,
   BeakerIcon,
   HeartIcon,
   CurrencyDollarIcon,
@@ -11,8 +10,20 @@ import { useRouter } from "next/navigation";
 export default function MainFeatures() {
     const router = useRouter();
 
-    const handleFlockFeedAndWater = () => {
+    const handleFlock = () => {
+        router.push("/pages/FlockManagement");
+      };
+      const handleFlockFeedAndWater = () => {
         router.push("/pages/FeedWaterTracking");
+      };
+      const handleFlockFinances = () => {
+        router.push("/pages/FinanceTracking");
+      };
+      const handleFlockHealthGrowth = () => {
+        router.push("/pages/MainMonitoring");
+      };
+      const handleFlockReports = () => {
+        router.push("/pages/ReportsAndInsights");
       };
      
   return (
@@ -43,12 +54,9 @@ export default function MainFeatures() {
         </div>
         <div className="bg-gray-50 px-5 py-3">
           <div className="text-sm">
-            <a
-              href="/pages/FlockManagement"
-              className="font-medium text-blue-700 hover:text-blue-900"
-            >
+            <button onClick={handleFlock} className="font-medium text-blue-700 hover:text-blue-900">
               Manage flocks
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -86,41 +94,6 @@ export default function MainFeatures() {
         </div>
       </div>
 
-      {/* Growth Analytics */}
-      <div className="bg-white overflow-hidden shadow rounded-lg">
-        <div className="p-5">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <ChartBarIcon
-                className="h-6 w-6 text-gray-400"
-                aria-hidden="true"
-              />
-            </div>
-            <div className="ml-5 w-0 flex-1">
-              <h3 className="text-lg font-medium text-gray-900 truncate">
-                Growth Analytics
-              </h3>
-            </div>
-          </div>
-          <div className="mt-4">
-            <img
-              className="h-48 w-full object-cover rounded-md"
-              src="/GrowthMonitoring.png"
-              alt="Growth Analytics"
-            />
-          </div>
-        </div>
-        <div className="bg-gray-50 px-5 py-3">
-          <div className="text-sm">
-            <a
-              href="#"
-              className="font-medium text-blue-700 hover:text-blue-900"
-            >
-              View analytics
-            </a>
-          </div>
-        </div>
-      </div>
 
       {/* Financial Tracking */}
       <div className="bg-white overflow-hidden shadow rounded-lg">
@@ -148,17 +121,15 @@ export default function MainFeatures() {
         </div>
         <div className="bg-gray-50 px-5 py-3">
           <div className="text-sm">
-            <a
-              href="#"
-              className="font-medium text-blue-700 hover:text-blue-900"
-            >
-              Manage finances
-            </a>
+           <button onClick={handleFlockFinances} className="font-medium text-blue-700 hover:text-blue-900" >
+           Manage finances
+
+           </button>
           </div>
         </div>
       </div>
 
-      {/* Health Monitoring */}
+      {/* Health and Growth Monitoring */}
       <div className="bg-white overflow-hidden shadow rounded-lg">
         <div className="p-5">
           <div className="flex items-center">
@@ -181,12 +152,9 @@ export default function MainFeatures() {
         </div>
         <div className="bg-gray-50 px-5 py-3">
           <div className="text-sm">
-            <a
-              href="#"
-              className="font-medium text-blue-700 hover:text-blue-900"
-            >
-              Check health
-            </a>
+           <button onClick={handleFlockHealthGrowth} className="font-medium text-blue-700 hover:text-blue-900">
+              Monitoring G & H
+            </button>
           </div>
         </div>
       </div>
@@ -217,12 +185,9 @@ export default function MainFeatures() {
         </div>
         <div className="bg-gray-50 px-5 py-3">
           <div className="text-sm">
-            <a
-              href="#"
-              className="font-medium text-blue-700 hover:text-blue-900"
-            >
+           <button onClick={handleFlockReports} className="font-medium text-blue-700 hover:text-blue-900">
               View reports
-            </a>
+              </button>
           </div>
         </div>
       </div>

@@ -3,28 +3,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import MainHeader from "./MainHeader";
 import HeroCountDown from "./HeroCountDown";
 
-
-
 export default function MainHero() {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0); // Index of the current video
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false); // Track video loading state
+  const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0); // Index of the current video
+  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false); // Track video loading state
+  const [loadingButton, setLoadingButton] = useState<"getStarted" | "learnMore" | null>(null); // Track which button is loading
+
+  const router = useRouter();
 
   const videos = ["/Pvideo1.mp4", "/Pvideo2.mp4", "/Pvideo3.mp4", "/Pvideo4.mp4"]; // Video sources
+
+  // Prefetch routes for smoother navigation
+  useEffect(() => {
+    router.prefetch("/pages/Dashboard");
+    router.prefetch("/pages/About");
+  }, [router]);
 
   const handleScreenClick = () => {
     // Change to the next video in the array
     setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
   };
 
-  const router = useRouter();
-
-  const handleGetStarted = () => {
-    router.push("/pages/Dashboard");
+  const handleNavigation = async (path: string, button: "getStarted" | "learnMore") => {
+    setLoadingButton(button);
+    try {
+      await router.push(path); // Handle navigation
+    } finally {
+      setLoadingButton(null); // Reset loading state
+    }
   };
 
   return (
@@ -43,7 +53,6 @@ export default function MainHero() {
 
       {/* Active Video */}
       <video
-        key={currentVideoIndex} // Ensures the video reloads on index change
         className="absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-1000"
         autoPlay
         muted
@@ -76,16 +85,22 @@ export default function MainHero() {
         {/* Call-to-Actions */}
         <div className="flex flex-wrap justify-center gap-4">
           <button
-            onClick={handleGetStarted}
-            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 sm:px-8 rounded-full shadow-lg transform hover:scale-105 transition"
+            onClick={() => handleNavigation("/pages/Dashboard", "getStarted")}
+            className={`${
+              loadingButton === "getStarted" ? "bg-gray-500 cursor-not-allowed" : "bg-yellow-500 hover:bg-yellow-600"
+            } text-black font-bold py-3 px-6 sm:px-8 rounded-full shadow-lg transform hover:scale-105 transition`}
+            disabled={loadingButton === "getStarted"}
           >
-            Get Started
+            {loadingButton === "getStarted" ? "Loading..." : "Get Started"}
           </button>
           <button
-            onClick={() => router.push("/pages/About")}
-            className="bg-transparent border-2 border-yellow-500 text-yellow-500 font-bold py-3 px-6 sm:px-8 rounded-full shadow-lg hover:bg-yellow-500 hover:text-black transition transform hover:scale-105"
+            onClick={() => handleNavigation("/pages/About", "learnMore")}
+            className={`${
+              loadingButton === "learnMore" ? "bg-gray-500 cursor-not-allowed" : "bg-transparent border-2 border-yellow-500 hover:bg-yellow-500"
+            } text-yellow-500 hover:text-black font-bold py-3 px-6 sm:px-8 rounded-full shadow-lg transform hover:scale-105 transition`}
+            disabled={loadingButton === "learnMore"}
           >
-            Learn More
+            {loadingButton === "learnMore" ? "Loading..." : "Learn More"}
           </button>
         </div>
 
@@ -94,7 +109,6 @@ export default function MainHero() {
           <HeroCountDown />
         </div>
       </div>
-      
     </div>
   );
 }
