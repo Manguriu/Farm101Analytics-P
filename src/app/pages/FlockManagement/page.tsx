@@ -8,7 +8,8 @@ import {
   CalendarIcon,
   UserGroupIcon,
   TrashIcon,
-  PencilIcon} from "@heroicons/react/outline";
+  PencilIcon,
+} from "@heroicons/react/outline";
 import Dashsidebar from "../Dashboard/Dashsidebar";
 
 interface Flock {
@@ -91,9 +92,10 @@ export default function FlockManagement() {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <Dashsidebar />
+      <Dashsidebar className="custom-class w-64" />
+
       {/* Main Content */}
-      <div className="flex-1 bg-gray-50 p-8 overflow-auto lg:ml-64">
+      <div className="flex-1 bg-gray-50 p-8">
         <ToastContainer />
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
@@ -300,7 +302,6 @@ const FlockList = ({
   calculateFlockAge,
 }: FlockListProps) => {
   return (
-  
     <AnimatePresence>
       {flocks.map((flock) => (
         <motion.div
@@ -330,7 +331,7 @@ const FlockList = ({
                   </span>
                 </p>
                 <p className="text-gray-700 flex items-center gap-2">
-                <CalendarIcon className="h-5 w-5 text-blue-600" />
+                  <CalendarIcon className="h-5 w-5 text-blue-600" />
                   <span>
                     <span className="font-semibold">Current Age:</span>{" "}
                     {calculateFlockAge(flock.dateAcquired)} days

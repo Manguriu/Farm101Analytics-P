@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Dashsidebar from "../Dashboard/Dashsidebar";
 // import { useRouter } from "next/navigation";
 import Feedsubheader from "./Feedsubheader";
-import { ScaleIcon, HeartIcon, CalendarIcon } from "@heroicons/react/outline"
+import { ScaleIcon, HeartIcon, CalendarIcon } from "@heroicons/react/outline";
 
 interface DailySummary {
   id: string;
@@ -198,10 +198,13 @@ export default function Component() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-emerald-50 to-purple-50 p-6">
-      <Dashsidebar />
-      <ToastContainer />
-      <div className="max-w-7xl items-center justify-center mx-auto space-y-6 lg:ml-64 bg-red-300">
+ <div className="flex h-screen">
+      {/* Sidebar */}
+      <Dashsidebar className="custom-class w-64" />
+
+      {/* Main Content */}
+      <div className="flex-1 bg-gray-50 p-8">
+        <ToastContainer />
         <Feedsubheader />
         {/* Form */}
         <div className="bg-white shadow-md rounded-lg p-6">
@@ -300,147 +303,160 @@ export default function Component() {
 
         {/* Daily Summaries */}
 
-<div className="bg-gradient-to-br from-blue-50 to-gray-50 shadow-lg rounded-xl p-6">
-  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
-    Daily Summaries
-  </h2>
-  <AnimatePresence>
-    {summaries.map((summary) => (
-      <motion.div
-        key={summary.id}
-        initial={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        exit={{ opacity: 0, translateY: 20 }}
-        className="mb-4 p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out"
-      >
-        <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-1">
-              Day {summary.day}
-            </h3>
-            <p className="text-sm text-gray-600">{format(summary.date, "MMM d, yyyy")}</p>
-          </div>
-          <div className="flex space-x-3">
-            <button
-              onClick={() => handleEdit(summary)}
-              className="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-150 ease-in-out"
-            >
-              <span>Edit</span>
-            </button>
-            <button
-              onClick={() => handleDelete(summary.id)}
-              className="flex items-center gap-1 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-150 ease-in-out"
-            >
-              <span>Delete</span>
-            </button>
-          </div>
+        <div className="bg-gradient-to-br from-blue-50 to-gray-50 shadow-lg rounded-xl p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
+            Daily Summaries
+          </h2>
+          <AnimatePresence>
+            {summaries.map((summary) => (
+              <motion.div
+                key={summary.id}
+                initial={{ opacity: 0, translateY: 20 }}
+                animate={{ opacity: 1, translateY: 0 }}
+                exit={{ opacity: 0, translateY: 20 }}
+                className="mb-4 p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out"
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                      Day {summary.day}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {format(summary.date, "MMM d, yyyy")}
+                    </p>
+                  </div>
+                  <div className="flex space-x-3">
+                    <button
+                      onClick={() => handleEdit(summary)}
+                      className="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-150 ease-in-out"
+                    >
+                      <span>Edit</span>
+                    </button>
+                    <button
+                      onClick={() => handleDelete(summary.id)}
+                      className="flex items-center gap-1 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-150 ease-in-out"
+                    >
+                      <span>Delete</span>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
-      </motion.div>
-    ))}
-  </AnimatePresence>
-</div>
-
 
         {/* Weekly Summaries */}
 
-<div className="bg-gradient-to-br from-green-50 to-gray-50 shadow-lg rounded-xl p-6">
-  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
-    Weekly Summaries
-  </h2>
-  <div className="space-y-4">
-    {getWeeklySummaries().map((week, index) => (
-      <div
-        key={index}
-        className="p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out border-l-4 border-green-500"
-      >
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <CalendarIcon className="h-5 w-5 text-green-500" />
-          Week of {format(week.startDate, "MMM d")}
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-          <div className="flex items-center gap-2">
-            <ScaleIcon className="h-5 w-5 text-blue-500" />
-            <p className="text-gray-700">
-              <span className="font-medium text-gray-800">Avg Weight:</span>{" "}
-              {week.avgWeight.toFixed(2)} kg
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <CalendarIcon className="h-5 w-5 text-blue-400" />
-            <p className="text-gray-700">
-              <span className="font-medium text-gray-800">Total Feed:</span>{" "}
-              {week.totalFeed} kg
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <CalendarIcon className="h-5 w-5 text-teal-500" />
-            <p className="text-gray-700">
-              <span className="font-medium text-gray-800">Total Water:</span>{" "}
-              {week.totalWater} L
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <HeartIcon className="h-5 w-5 text-red-500" />
-            <p className="text-gray-700">
-              <span className="font-medium text-gray-800">Deaths:</span> {week.deaths}
-            </p>
+        <div className="bg-gradient-to-br from-green-50 to-gray-50 shadow-lg rounded-xl p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
+            Weekly Summaries
+          </h2>
+          <div className="space-y-4">
+            {getWeeklySummaries().map((week, index) => (
+              <div
+                key={index}
+                className="p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out border-l-4 border-green-500"
+              >
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <CalendarIcon className="h-5 w-5 text-green-500" />
+                  Week of {format(week.startDate, "MMM d")}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <ScaleIcon className="h-5 w-5 text-blue-500" />
+                    <p className="text-gray-700">
+                      <span className="font-medium text-gray-800">
+                        Avg Weight:
+                      </span>{" "}
+                      {week.avgWeight.toFixed(2)} kg
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CalendarIcon className="h-5 w-5 text-blue-400" />
+                    <p className="text-gray-700">
+                      <span className="font-medium text-gray-800">
+                        Total Feed:
+                      </span>{" "}
+                      {week.totalFeed} kg
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CalendarIcon className="h-5 w-5 text-teal-500" />
+                    <p className="text-gray-700">
+                      <span className="font-medium text-gray-800">
+                        Total Water:
+                      </span>{" "}
+                      {week.totalWater} L
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <HeartIcon className="h-5 w-5 text-red-500" />
+                    <p className="text-gray-700">
+                      <span className="font-medium text-gray-800">Deaths:</span>{" "}
+                      {week.deaths}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-    ))}
-  </div>
-</div>
-
 
         {/* Monthly Summaries */}
         <div className="bg-gradient-to-br from-yellow-50 to-gray-50 shadow-lg rounded-xl p-6">
-  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
-    Monthly Summaries
-  </h2>
-  <div className="space-y-4">
-    {getMonthlySummaries().map((month, index) => (
-      <div
-        key={index}
-        className="p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out border-l-4 border-yellow-500"
-      >
-        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <CalendarIcon className="h-5 w-5 text-yellow-500" />
-          Month: {format(month.startDate, "MMM yyyy")}
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-          <div className="flex items-center gap-2">
-            <ScaleIcon className="h-5 w-5 text-blue-500" />
-            <p className="text-gray-700">
-              <span className="font-medium text-gray-800">Avg Weight:</span>{" "}
-              {month.avgWeight.toFixed(2)} kg
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <HeartIcon className="h-5 w-5 text-blue-400" />
-            <p className="text-gray-700">
-              <span className="font-medium text-gray-800">Total Feed:</span>{" "}
-              {month.totalFeed} kg
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <HeartIcon className="h-5 w-5 text-teal-500" />
-            <p className="text-gray-700">
-              <span className="font-medium text-gray-800">Total Water:</span>{" "}
-              {month.totalWater} L
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <HeartIcon className="h-5 w-5 text-red-500" />
-            <p className="text-gray-700">
-              <span className="font-medium text-gray-800">Deaths:</span>{" "}
-              {month.deaths}
-            </p>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 text-center justify-center">
+            Monthly Summaries
+          </h2>
+          <div className="space-y-4">
+            {getMonthlySummaries().map((month, index) => (
+              <div
+                key={index}
+                className="p-5 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out border-l-4 border-yellow-500"
+              >
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <CalendarIcon className="h-5 w-5 text-yellow-500" />
+                  Month: {format(month.startDate, "MMM yyyy")}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <ScaleIcon className="h-5 w-5 text-blue-500" />
+                    <p className="text-gray-700">
+                      <span className="font-medium text-gray-800">
+                        Avg Weight:
+                      </span>{" "}
+                      {month.avgWeight.toFixed(2)} kg
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <HeartIcon className="h-5 w-5 text-blue-400" />
+                    <p className="text-gray-700">
+                      <span className="font-medium text-gray-800">
+                        Total Feed:
+                      </span>{" "}
+                      {month.totalFeed} kg
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <HeartIcon className="h-5 w-5 text-teal-500" />
+                    <p className="text-gray-700">
+                      <span className="font-medium text-gray-800">
+                        Total Water:
+                      </span>{" "}
+                      {month.totalWater} L
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <HeartIcon className="h-5 w-5 text-red-500" />
+                    <p className="text-gray-700">
+                      <span className="font-medium text-gray-800">Deaths:</span>{" "}
+                      {month.deaths}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-    ))}
-  </div>
-</div>
       </div>
     </div>
   );

@@ -9,7 +9,11 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 
-export default function Dashsidebar() {
+interface DashsidebarProps extends React.HTMLAttributes<HTMLDivElement> {
+  className?: string; // Allow external classes
+}
+
+export default function Dashsidebar({ className = "", ...props }: DashsidebarProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentRoute, setCurrentRoute] = useState("");
 
@@ -27,11 +31,6 @@ export default function Dashsidebar() {
       icon: ChartBarIcon,
     },
     { href: "/pages/FeedWaterTracking", label: "Feed & Water", icon: CogIcon },
-    // {
-    //   href: "/pages/GrowthMonitoring",
-    //   label: "Growth Analytics",
-    //   icon: ChartBarIcon,
-    // },
     {
       href: "/pages/MainMonitoring",
       label: "Monitoring",
@@ -42,11 +41,6 @@ export default function Dashsidebar() {
       label: "Financial Tracking",
       icon: CogIcon,
     },
-    // {
-    //   href: "/pages/HealthMonitoring",
-    //   label: "Health Monitoring",
-    //   icon: ChartBarIcon,
-    // },
     {
       href: "/pages/ReportsAndInsights",
       label: "Reports & Insights",
@@ -56,7 +50,7 @@ export default function Dashsidebar() {
   ];
 
   return (
-    <div>
+    <div {...props} className={`relative ${className}`}>
       {/* Sidebar Toggle Button */}
       <button
         className="lg:hidden fixed top-5 left-1 z-50 bg-blue-700 text-white p-2 rounded-full shadow-lg"
@@ -96,7 +90,7 @@ export default function Dashsidebar() {
         </nav>
         <div className="absolute bottom-0 w-full p-4">
           <div className="flex items-center py-3 border-t border-blue-600">
-            <img className="h-8 w-8 rounded-full" src="/Chick1.png" alt="" />
+            <img className="h-8 w-8 rounded-full" src="/Chick1.png" alt="User Avatar" />
             <div className="ml-3">
               <p className="text-sm font-medium text-white">John Smith</p>
               <p className="text-xs font-medium text-blue-300">View profile</p>
@@ -105,6 +99,5 @@ export default function Dashsidebar() {
         </div>
       </aside>
     </div>
-
   );
 }

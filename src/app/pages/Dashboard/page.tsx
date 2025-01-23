@@ -25,13 +25,19 @@ export default function Dashboard() {
  
 
   return (
-    <div className="flex h-screen bg-gray-100">
-    {/* Sidebar */}
-    <Dashsidebar />
+    // <div className="flex h-screen bg-gray-100">
+    // {/* Sidebar */}
+    // <Dashsidebar />
 
-    {/* Main Content */}
-    <div className="flex-1 lg:ml-64 mt-4">
-      <header className="bg-white shadow-sm p-2">
+    // {/* Main Content */}
+    // <div className="flex-1  mt-4">
+     <div className="flex h-screen">
+          {/* Sidebar */}
+                <Dashsidebar className="custom-class lg:w-64" />
+          
+          {/* Main Content */}
+          <div className="flex-1 bg-gray-50 p-8 ">
+      <header className=" shadow-sm p-2">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 ">
           <div className="relative flex justify-between ">
             <h1 className="text-2xl sm:font-bold text-gray-900 ">Dashboard</h1>

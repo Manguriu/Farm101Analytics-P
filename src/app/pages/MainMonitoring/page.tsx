@@ -6,11 +6,7 @@ import { differenceInDays } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  ChartBarIcon,
-  PencilIcon,
-  TrashIcon,
-} from "@heroicons/react/outline";
+import { ChartBarIcon, PencilIcon} from "@heroicons/react/outline";
 import Dashsidebar from "../Dashboard/Dashsidebar";
 
 interface Flock {
@@ -39,7 +35,7 @@ export default function page() {
     },
     {
       id: "2",
-      batchName: "Spring Bah 2024",
+      batchName: "sgsghsh Bah 224",
       startDate: new Date(2024, 0, 1),
       currentCount: 1600,
       breed: "Broiler Ross 308",
@@ -47,7 +43,7 @@ export default function page() {
     },
     {
       id: "3",
-      batchName: "sumer Bah 2024",
+      batchName: "shsjsjyuyu Bah 2024",
       startDate: new Date(2024, 0, 1),
       currentCount: 1600,
       breed: "Broiler Ross 308",
@@ -88,14 +84,16 @@ export default function page() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-emerald-50 to-orange-50 p-6">
-      <Dashsidebar />
-      <ToastContainer />
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <Dashsidebar className="custom-class lg:w-64" />
 
-      <div className="flex-1 p-8 overflow-auto lg:ml-64">
-        <div className="max-w-7xl mx-auto space-y-6">
+      {/* Main Content */}
+      <div className="flex-1 bg-gray-50 p-4">
+        <ToastContainer />
+        <div className="max-w-7xl mx-auto flex flex-col gap-4">
           {/* Header Section */}
-          <div className="mb-8">
+          <div className="mb-4">
             <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
               <ChartBarIcon className="h-8 w-8 text-blue-600" />
               Health Monitoring & Growth Monitoring{" "}
@@ -107,7 +105,7 @@ export default function page() {
           </div>
 
           {/* Stats Overview */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* Total Feed Stock */}
             <div className="bg-white shadow-md rounded-lg p-4">
               <div className="flex justify-between items-center mb-2">
@@ -162,9 +160,7 @@ export default function page() {
               </div>
             </div>
           </div>
-
-          {/* Flock Cards */}
-          <div className="flex gap-6 flex-wrap">
+          <div className="flex flex-col gap-6 mb-4">
             <AnimatePresence>
               {flocks.map((flock) => (
                 <motion.div
@@ -173,47 +169,44 @@ export default function page() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-white shadow-md rounded-lg overflow-hidden min-w-[300px] flex-shrink-0"
+                  className="bg-white shadow-md rounded-lg border border-gray-200 w-full mx-auto p-6"
                 >
-                  <div className="bg-blue-50 p-4">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="text-lg font-bold text-gray-800">
-                          {flock.batchName}
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          Age: {differenceInDays(new Date(), flock.startDate)}{" "}
-                          days
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          Breed: {flock.breed}
-                        </p>
-                      </div>
-                      <div className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded">
+                  {/* Card Content */}
+                  <div className="flex flex-col lg:flex-row justify-between items-stretch gap-4 w-full">
+                    {/* Flock Info */}
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        {flock.batchName}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Breed: {flock.breed}
+                      </p>
+                      <div className="bg-gray-100 text-gray-600 text-xs font-medium px-2 py-1 rounded">
                         {flock.currentCount} Birds
                       </div>
+                      <p className="text-sm text-gray-600">
+                        Age: {differenceInDays(new Date(), flock.startDate)}{" "}
+                        days
+                      </p>
                     </div>
-                  </div>
-                  <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow gap-4">
-                    {/* To health */}
-                    <button
-                      // onClick={handleFlockFeedAndWater}
-                      onClick={() => handleFlockHealth(flock)}
-                      className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-gradient-to-r hover:from-green-600 hover:to-green-200 hover:scale-105 hover:shadow-lg transition-transform duration-300 ease-in-out"
-                    >
-                      <PencilIcon className="h-5 w-5" />
-                      <span className="font-medium">Health Monitoring</span>
-                    </button>
 
-                    {/* To Growth  */}
-                    <button
-                      // onClick={() => handleDelete(flock.id)}
-                      onClick={() => handleFlockGrowth(flock)}
-                      className="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-gradient-to-r hover:from-cyan-900 hover:to-cyan-200 hover:scale-105 hover:shadow-lg transition-transform duration-300 ease-in-out"
-                    >
-                      <TrashIcon className="h-5 w-5" />
-                      <span className="font-medium">Growth Monitoring</span>
-                    </button>
+                    {/* Buttons Section */}
+                    <div className="flex flex-row lg:flex-col gap-2 justify-center items-center lg:items-start">
+                      <button
+                        onClick={() => handleFlockHealth(flock)}
+                        className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+                      >
+                        <PencilIcon className="h-5 w-5" />
+                        <span className="font-medium">Health Monitoring</span>
+                      </button>
+                      <button
+                        onClick={() => handleFlockGrowth(flock)}
+                        className="flex items-center justify-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition"
+                      >
+                        <PencilIcon className="h-5 w-5" />
+                        <span className="font-medium">Growth Monitoring</span>
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               ))}
