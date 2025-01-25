@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { format, subDays } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { Line } from "react-chartjs-2";
@@ -55,7 +55,7 @@ interface WeightEntry {
   startDate: string | null;
 }
 
-export default function GrowthMonitoring() {
+function GrowthMonitoringContent() {
   const searchParams = useSearchParams();
   const batchName = searchParams.get("batchName") || "Unknown Batch";
   const currentCount = searchParams.get("currentCount");
@@ -416,5 +416,13 @@ export default function GrowthMonitoring() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function GrowthMonitoring() {
+  return (
+    <Suspense fallback={<div>Loading Growth Monitoring...</div>}>
+      <GrowthMonitoringContent />
+    </Suspense>
   );
 }
