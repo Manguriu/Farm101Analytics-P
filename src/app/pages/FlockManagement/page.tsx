@@ -13,7 +13,7 @@ import {
 import Dashsidebar from "../Dashboard/Dashsidebar";
 
 interface Flock {
-  id: number;
+  id: string;
   batchName: string;
   dateAcquired: string;
   initialCount: number;
@@ -45,11 +45,19 @@ export default function FlockManagement() {
     localStorage.setItem("flocks", JSON.stringify(flocks));
   }, [flocks]);
 
+//generate IDs
+const generateUniqueId = (): string => {
+  return Math.random().toString(16).substring(2, 10) + Date.now().toString(16);
+};
+
+  
+
   // Add a new flock
   const addFlock = (flock: Omit<Flock, "id" | "metrics">) => {
+    const uniqueId = generateUniqueId();
     const newFlock: Flock = {
       ...flock,
-      id: Date.now(),
+      id: uniqueId,
       metrics: [],
     };
     setFlocks([newFlock, ...flocks]);
@@ -57,7 +65,7 @@ export default function FlockManagement() {
   };
 
   // Delete a flock
-  const deleteFlock = (id: number) => {
+  const deleteFlock = (id: string) => {
     if (window.confirm("Are you sure you want to delete this flock?")) {
       setFlocks(flocks.filter((flock) => flock.id !== id));
       toast.success("Flock deleted successfully.");
@@ -92,7 +100,7 @@ export default function FlockManagement() {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <Dashsidebar className="custom-class w-64" />
+      <Dashsidebar className="custom-class lg:w-64" />
 
       {/* Main Content */}
       <div className="flex-1 bg-gray-50 p-8">
@@ -290,7 +298,7 @@ const AddOrEditFlockForm = ({
 // Flock List
 interface FlockListProps {
   flocks: Flock[];
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
   onEdit: (flock: Flock) => void;
   calculateFlockAge: (dateAcquired: string) => number;
 }
@@ -323,6 +331,13 @@ const FlockList = ({
                 </h3>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <p className="text-gray-700 flex items-center gap-2">
+                  <PencilIcon className="h-5 w-5 text-blue-600" />
+                  <span>
+                    <span className="font-semibold">Batch ID:</span> {flock.id}
+                  </span>
+                </p>
+
                 <p className="text-gray-700 flex items-center gap-2">
                   <CalendarIcon className="h-5 w-5 text-blue-600" />
                   <span>
