@@ -37,7 +37,7 @@ export default function Dashsidebar({ className = "", ...props }: DashsidebarPro
       icon: ChartBarIcon,
     },
     {
-      href: "/pages/ExpenseIncomeTracking",
+      href: "/pages/FinanceTracking",
       label: "Financial Tracking",
       icon: CogIcon,
     },

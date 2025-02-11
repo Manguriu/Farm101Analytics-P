@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import MainHeader from "./MainHeader";
 import HeroCountDown from "./HeroCountDown";
-import { Button } from "@/app/lib/presentation/components/ui/button/Button";
+// import { Button } from "@/app/lib/presentation/components/ui/button/Button";
 
 export default function MainHero() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0); // Index of the current video
@@ -82,9 +82,9 @@ export default function MainHero() {
           Harness the power of technology to maximize efficiency, reduce waste, 
           and grow your poultry business. SmartPoultry Hub is built for serious farmers who mean business.
         </p>
-        <Button variant="default" size="lg">
+        {/* <Button variant="default" size="lg">
           Check
-        </Button>
+        </Button> */}
 
         {/* Call-to-Actions */}
         <div className="flex flex-wrap justify-center gap-4">

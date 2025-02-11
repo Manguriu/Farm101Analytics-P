@@ -1,9 +1,12 @@
+"use client"
+
 import React from 'react'
+import ReportsPage from './ReportsPage'
 
 
 
 export default function page() {
   return (
-    <div>page</div>
+    <div><ReportsPage /></div>
   )
 }

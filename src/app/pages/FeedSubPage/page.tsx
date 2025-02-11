@@ -198,13 +198,15 @@ export default function Component() {
   };
 
   return (
- <div className="flex h-screen">
-      {/* Sidebar */}
-      <Dashsidebar className="custom-class w-64" />
+    <div className="flex h-screen bg-gray-100 ">
+    {/* Sidebar */}
+    <Dashsidebar className="custom-class w-64" />
+    <ToastContainer />
 
-      {/* Main Content */}
-      <div className="flex-1 bg-gray-50 p-8">
-        <ToastContainer />
+    {/* Main Content */}
+    <div className="flex flex-col flex-1 gap-4 bg-gray-50 p-4 space-y-6 ">
+      <div className="max-w-7xl mx-auto">
+        {/* Header Section */}
         <Feedsubheader />
         {/* Form */}
         <div className="bg-white shadow-md rounded-lg p-6">
@@ -458,6 +460,7 @@ export default function Component() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import React from 'react'
+import Finances from './Finances'
 
 
 export default function page() {
   return (
-    <div>page</div>
+    <div className='items-center justify-center'><Finances /></div>
   )
 }

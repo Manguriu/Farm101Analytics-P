@@ -88,7 +88,7 @@ export default function MainFeatures() {
         <div className="bg-gray-50 px-5 py-3">
           <div className="text-sm">
             <button onClick={handleFlockFeedAndWater} className="font-medium text-blue-700 hover:text-blue-900">
-              Track resources
+              Track feed and water
             </button>
           </div>
         </div>
@@ -138,7 +138,7 @@ export default function MainFeatures() {
             </div>
             <div className="ml-5 w-0 flex-1">
               <h3 className="text-lg font-medium text-gray-900 truncate">
-                Health Monitoring
+                Health and Growth Monitoring
               </h3>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function MainFeatures() {
         <div className="bg-gray-50 px-5 py-3">
           <div className="text-sm">
            <button onClick={handleFlockHealthGrowth} className="font-medium text-blue-700 hover:text-blue-900">
-              Monitoring G & H
+              Flocks Monitoring 
             </button>
           </div>
         </div>
