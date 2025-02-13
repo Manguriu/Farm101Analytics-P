@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ChartBarIcon, PencilIcon} from "@heroicons/react/outline";
 import Dashsidebar from "../Dashboard/Dashsidebar";
+import Breadcrumb from "../Dashboard/Breadcrumb";
 
 interface Flock {
   id: string;
@@ -90,8 +91,10 @@ export default function page() {
 
       {/* Main Content */}
       <div className="flex-1 bg-gray-50 p-4">
+        
         <ToastContainer />
         <div className="max-w-7xl mx-auto flex flex-col gap-4">
+        <Breadcrumb />
           {/* Header Section */}
           <div className="mb-8 text-center lg:text-left">
             <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">

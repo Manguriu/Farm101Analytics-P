@@ -11,6 +11,7 @@ import {
   PencilIcon,
 } from "@heroicons/react/outline";
 import Dashsidebar from "../Dashboard/Dashsidebar";
+import Breadcrumb from "../Dashboard/Breadcrumb";
 
 interface Flock {
   id: string;
@@ -45,12 +46,12 @@ export default function FlockManagement() {
     localStorage.setItem("flocks", JSON.stringify(flocks));
   }, [flocks]);
 
-//generate IDs
-const generateUniqueId = (): string => {
-  return Math.random().toString(16).substring(2, 10) + Date.now().toString(16);
-};
-
-  
+  //generate IDs
+  const generateUniqueId = (): string => {
+    return (
+      Math.random().toString(16).substring(2, 10) + Date.now().toString(16)
+    );
+  };
 
   // Add a new flock
   const addFlock = (flock: Omit<Flock, "id" | "metrics">) => {
@@ -98,16 +99,18 @@ const generateUniqueId = (): string => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 mt-4">
-          {/* Sidebar */}
-          <Dashsidebar className="custom-class lg:w-64" />
-    
-          {/* Main Content */}
-          <div className="flex flex-col flex-1 bg-gray-50 p-2">
-            <ToastContainer />
-            <div className="max-w-7xl mx-auto">
-              {/* Header Section */}
-          <div className="mb-8 text-center lg:text-left">
+    <div className="flex flex-col lg:flex-row h-screen bg-gray-100 mt-2">
+      {/* Sidebar */}
+      <Dashsidebar className="w-full lg:w-64 flex-shrink-0" />
+
+      <ToastContainer />
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col gap-6 p-4">
+        <div className="max-w-7xl mx-auto w-full">
+          {/* Header Section */}
+          <Breadcrumb />
+          <div className="mt-4 mb-8 text-center lg:text-left">
             <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">
               <UserGroupIcon className="h-8 w-8 text-blue-600" />
               Flock Management

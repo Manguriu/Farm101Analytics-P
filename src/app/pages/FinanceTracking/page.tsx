@@ -4,6 +4,7 @@ import Dashsidebar from "../Dashboard/Dashsidebar";
 import { ToastContainer } from "react-toastify";
 import { ChartBarIcon } from "lucide-react";
 import FinancialWorkings from "./FinancialWorkings";
+import Breadcrumb from "../Dashboard/Breadcrumb";
 
 export default function page() {
   return (
@@ -15,8 +16,9 @@ export default function page() {
       <div className="flex-1 bg-gray-50 p-4">
         <ToastContainer />
         <div className="max-w-7xl mx-auto">
+          <Breadcrumb />
           {/* Header Section */}
-          <div className="mb-8 text-center lg:text-left">
+          <div className="mt-4 mb-8 text-center lg:text-left">
             <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">
               <ChartBarIcon className="h-8 w-8 text-blue-600" />
               Financial Tracking{" "}
