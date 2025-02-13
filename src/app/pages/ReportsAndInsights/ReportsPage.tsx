@@ -2,6 +2,7 @@ import { Bar, Pie, Line } from 'react-chartjs-2'
 import { Chart as ChartJS, registerables } from 'chart.js'
 import Dashsidebar from '../Dashboard/Dashsidebar'
 import { ChartBarIcon } from 'lucide-react'
+import Breadcrumb from '../Dashboard/Breadcrumb'
 
 ChartJS.register(...registerables)
 
@@ -51,8 +52,10 @@ export default function ReportsPage() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col gap-6 p-4">
         <div className="max-w-7xl mx-auto w-full">
+        <Breadcrumb />
+
           {/* Header Section */}
-          <div className="mb-8 text-center lg:text-left">
+          <div className=" mt-4 mb-8 text-center lg:text-left">
             <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">
               <ChartBarIcon className="h-8 w-8 text-blue-600 " />
               Reports and Insights

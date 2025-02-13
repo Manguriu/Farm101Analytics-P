@@ -23,9 +23,9 @@ export default function Dashboard() {
       <Dashsidebar className="custom-class lg:w-64" />
 
       {/* Main Content */}
-      <div className="flex-1 bg-gray-50 p-2 ">
+      <div className="flex-1 bg-gray-50 p-8 ">
         <header className=" shadow-sm p-2">
-          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-2 ">
+          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 ">
             <div className="relative flex justify-between ">
               <h1 className="text-2xl sm:font-bold text-gray-900 ">
                 Dashboard

@@ -9,6 +9,7 @@ import Dashsidebar from "../Dashboard/Dashsidebar";
 // import { useRouter } from "next/navigation";
 import Feedsubheader from "./Feedsubheader";
 import { ScaleIcon, HeartIcon, CalendarIcon } from "@heroicons/react/outline";
+import Breadcrumb from "../Dashboard/Breadcrumb";
 
 interface DailySummary {
   id: string;
@@ -204,11 +205,13 @@ export default function Component() {
       <ToastContainer />
       {/* Main Content */}
       <div className="flex flex-col flex-1 gap-8 p-2 mx-auto">
+        
         <div className="max-w-7xl mx-auto">
+        <Breadcrumb />
           {/* Header Section */}
           <Feedsubheader />
 
-          <div className="flex flex-col gap-4 pb-2">
+          <div className="flex flex-col gap-4 pb-2 mt-4">
             {/* Form */}
             <div className=" shadow-md rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-4 text-center justify-center">

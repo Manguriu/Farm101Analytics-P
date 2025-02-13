@@ -13,6 +13,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/outline";
 import Dashsidebar from "../Dashboard/Dashsidebar";
+import Breadcrumb from "../Dashboard/Breadcrumb";
 
 interface Flock {
   id: string;
@@ -95,7 +96,8 @@ export default function Component() {
         <ToastContainer />
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
-          <div className="mb-8 text-center lg:text-left">
+          <Breadcrumb />
+          <div className="mt-4 mb-8 text-center lg:text-left">
             <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">
               <ChartBarIcon className="h-8 w-8 text-blue-600" />
               Feed & Watering Monitoring{" "}

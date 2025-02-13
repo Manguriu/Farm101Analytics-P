@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/app/lib/presentation/components/ui/button/Button";
 import Dashsidebar from "../Dashboard/Dashsidebar";
+import Breadcrumb from "../Dashboard/Breadcrumb";
 
 // Register Chart.js components
 ChartJS.register(
@@ -197,9 +198,11 @@ export default function GrowthMonitoringMain() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto flex flex-col gap-4 p-2">
+      <Breadcrumb />
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 w-full">
           {/* Title Section */}
+          
           <div className="mb-8 text-center lg:text-left w-full lg:w-auto">
             <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">
               <PlusCircleIcon className="h-6 w-6 sm:h-8 sm:w-8 text-emerald-600" />

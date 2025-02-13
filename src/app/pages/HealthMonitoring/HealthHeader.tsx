@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/app/lib/presentation/components/ui/button/Button";
 import Dashsidebar from "../Dashboard/Dashsidebar";
+import Breadcrumb from "../Dashboard/Breadcrumb";
 
 // Define the HealthCheck type
 type HealthCheck = {
@@ -125,13 +126,13 @@ export default function HealthHeader() {
     <div className="flex h-screen">
       {/* Sidebar */}
       <Dashsidebar className="custom-class lg:w-64" />
+      <ToastContainer />
 
       {/* Main Content */}
       <div className="flex-1 bg-gray-50 p-4">
-        <ToastContainer />
         <div className="bg-white rounded-lg shadow-md p-4 mb-4 max-w-7xl mx-auto flex flex-col">
-          <ToastContainer />
-          <div className="flex items-center gap-4 mb-4">
+          <Breadcrumb />
+          <div className="mt-4 flex items-center gap-4 mb-4">
             <UserGroupIcon className="h-10 w-10 text-blue-600" />
             <h1 className="text-3xl font-bold text-gray-800">
               Batch Name: {batchName}
