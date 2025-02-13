@@ -84,7 +84,7 @@ export default function page() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen mt-2">
       {/* Sidebar */}
       <Dashsidebar className="custom-class lg:w-64" />
 
@@ -93,8 +93,8 @@ export default function page() {
         <ToastContainer />
         <div className="max-w-7xl mx-auto flex flex-col gap-4">
           {/* Header Section */}
-          <div className="mb-4">
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+          <div className="mb-8 text-center lg:text-left">
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">
               <ChartBarIcon className="h-8 w-8 text-blue-600" />
               Health Monitoring & Growth Monitoring{" "}
             </h1>

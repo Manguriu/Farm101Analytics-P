@@ -113,7 +113,6 @@ export default function FinancialWorkings() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      // Simulating API call to save the record
       const newRecord: FinancialRecord = {
         id: Date.now().toString(),
         batchName,
@@ -140,8 +139,24 @@ export default function FinancialWorkings() {
         pricePerBird: Number.parseFloat(pricePerBird) || 0,
         date: new Date().toISOString(),
       };
+
       setSavedRecords((prev) => [...prev, newRecord]);
+
       toast.success("Financial record saved successfully");
+      // Reset the form fields
+      setBatchName("");
+      setExpenses({
+        food: "",
+        water: "",
+        vaccination: "",
+        medicine: "",
+        labExpenses: "",
+      });
+      setInitialBirds("");
+      setInitialBirdPrice("");
+      setRemainingBirds("");
+      setPricePerBird("");
+      setRevenue(0);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Failed to save financial record");
@@ -152,30 +167,29 @@ export default function FinancialWorkings() {
 
   return (
     <div className="container mx-auto p-4 min-h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="flex flex-col md:grid-cols-2 gap-6 w-full">
         <div className="p-2 bg-blue-100 shadow-lg rounded-lg overflow-hidden">
           <div className="bg-blue-200 px-4 py-2">
             <h2 className="text-xl font-semibold text-blue-800">Expenses</h2>
           </div>
-      
-          <div className="p-4 space-y-4">
 
-          <div>
-            <label
-              htmlFor="batchName"
-              className="block text-sm font-medium text-blue-700"
-            >
-              Batch Name
-            </label>
-            <input
-              id="batchName"
-              type="text"
-              value={batchName}
-              onChange={(e) => setBatchName(e.target.value)}
-              placeholder="Enter batch name"
-              className="p-2 mt-1 block w-full rounded-md border-blue-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-            />
-          </div>
+          <div className="p-4 space-y-4">
+            <div>
+              <label
+                htmlFor="batchName"
+                className="block text-sm font-medium text-blue-700"
+              >
+                Batch Name
+              </label>
+              <input
+                id="batchName"
+                type="text"
+                value={batchName}
+                onChange={(e) => setBatchName(e.target.value)}
+                placeholder="Enter batch name"
+                className="p-2 mt-1 block w-full rounded-md border-blue-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+              />
+            </div>
             <div>
               <label
                 htmlFor="initialBirds"
@@ -213,9 +227,9 @@ export default function FinancialWorkings() {
                 Total Initial Birds Cost
               </span>
               <p className="text-xl font-bold text-blue-600">
-              <span className="text-gray-700 font-medium">KSH</span>   
-              
-                 {(
+                <span className="text-gray-700 font-medium">KSH</span>
+
+                {(
                   (Number.parseFloat(initialBirds) || 0) *
                   (Number.parseFloat(initialBirdPrice) || 0)
                 ).toFixed(2)}
@@ -291,45 +305,59 @@ export default function FinancialWorkings() {
                 Total Revenue
               </span>
               <p className="text-2xl font-bold text-green-600">
-              <span className="text-gray-700 font-medium">KSH</span> {revenue.toFixed(2)}
+                <span className="text-gray-700 font-medium">KSH</span>{" "}
+                {revenue.toFixed(2)}
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      
       <div className="mt-6 bg-gradient-to-br from-yellow-50 to-yellow-100 shadow-2xl rounded-xl overflow-hidden border border-yellow-200">
-  <div className="bg-yellow-200 px-6 py-3 flex items-center justify-between">
-    <h2 className="text-2xl font-bold text-yellow-900">📊 Financial Summary</h2>
-  </div>
-  <div className="p-6 space-y-4">
-    <p className="text-lg flex justify-between">
-      <span className="font-medium text-gray-700">Total Expenses:</span>
-      <span className="font-bold text-red-600"> <span className="text-gray-700 font-medium">KSH</span> {totalExpenses.toFixed(2)}</span>
-    </p>
-    <p className="text-lg flex justify-between">
-      <span className="font-medium text-gray-700">Total Revenue:</span>
-      <span className="font-bold text-green-600"> <span className="text-gray-700 font-medium">KSH</span>   {revenue.toFixed(2)}</span>
-    </p>
-    <p className="text-xl flex justify-between">
-      <span className="font-semibold text-gray-800">Profit Margin:</span>
-      <span className={`font-bold ${profitMargin >= 0 ? "text-green-600" : "text-red-600"}`}>
-      <span className="text-gray-700 font-medium">KSH</span> {profitMargin.toFixed(2)}
-      </span>
-    </p>
-    <div className="flex justify-center mt-4">
-      <button
-        onClick={handleSave}
-        disabled={isSaving}
-        className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-gray-400"
-      >
-        {isSaving ? "Saving..." : "💾 Save Financial Record"}
-      </button>
-    </div>
-  </div>
-</div>
-
+        <div className="bg-yellow-200 px-6 py-3 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-yellow-900">
+            📊 Financial Summary
+          </h2>
+        </div>
+        <div className="p-6 space-y-4">
+          <p className="text-lg flex justify-between">
+            <span className="font-medium text-gray-700">Total Expenses:</span>
+            <span className="font-bold text-red-600">
+              {" "}
+              <span className="text-gray-700 font-medium">KSH</span>{" "}
+              {totalExpenses.toFixed(2)}
+            </span>
+          </p>
+          <p className="text-lg flex justify-between">
+            <span className="font-medium text-gray-700">Total Revenue:</span>
+            <span className="font-bold text-green-600">
+              {" "}
+              <span className="text-gray-700 font-medium">KSH</span>{" "}
+              {revenue.toFixed(2)}
+            </span>
+          </p>
+          <p className="text-xl flex justify-between">
+            <span className="font-semibold text-gray-800">Profit Margin:</span>
+            <span
+              className={`font-bold ${
+                profitMargin >= 0 ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              <span className="text-gray-700 font-medium">KSH</span>{" "}
+              {profitMargin.toFixed(2)}
+            </span>
+          </p>
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={handleSave}
+              disabled={isSaving}
+              className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-gray-400"
+            >
+              {isSaving ? "Saving..." : "💾 Save Financial Record"}
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div className="p-4 mt-6 bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="px-4 py-2 border-b">

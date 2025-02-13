@@ -98,17 +98,17 @@ const generateUniqueId = (): string => {
   };
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <Dashsidebar className="custom-class lg:w-64" />
-
-      {/* Main Content */}
-      <div className="flex-1 bg-gray-50 p-8">
-        <ToastContainer />
-        <div className="max-w-7xl mx-auto">
-          {/* Header Section */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+    <div className="flex h-screen bg-gray-100 mt-4">
+          {/* Sidebar */}
+          <Dashsidebar className="custom-class lg:w-64" />
+    
+          {/* Main Content */}
+          <div className="flex flex-col flex-1 bg-gray-50 p-2">
+            <ToastContainer />
+            <div className="max-w-7xl mx-auto">
+              {/* Header Section */}
+          <div className="mb-8 text-center lg:text-left">
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">
               <UserGroupIcon className="h-8 w-8 text-blue-600" />
               Flock Management
             </h1>

@@ -88,15 +88,15 @@ export default function Component() {
   return (
     <div className="flex h-screen bg-gray-100 ">
       {/* Sidebar */}
-      <Dashsidebar className="custom-class w-64" />
+      <Dashsidebar className="custom-class lg:w-64" />
 
       {/* Main Content */}
-      <div className="flex flex-col flex-1 gap-4 bg-gray-50 p-4 space-y-6 ">
+      <div className="flex flex-col flex-1 bg-gray-50 p-2">
         <ToastContainer />
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+          <div className="mb-8 text-center lg:text-left">
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center lg:justify-start gap-2 max-sm:text-lg">
               <ChartBarIcon className="h-8 w-8 text-blue-600" />
               Feed & Watering Monitoring{" "}
             </h1>
@@ -106,7 +106,7 @@ export default function Component() {
           </div>
 
           {/* Stats Overview */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-4 lg:grid-cols-4">
             {/* Total Feed Stock */}
             <div className="bg-white shadow-md rounded-lg p-4">
               <div className="flex justify-between items-center mb-2">
@@ -181,7 +181,7 @@ export default function Component() {
           </div>
           <div className="mt-5">
             {/* Flock Cards */}
-            <div className="flex gap-6 flex-wrap">
+            <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-4">
               <AnimatePresence>
                 {flocks.map((flock) => (
                   <motion.div
