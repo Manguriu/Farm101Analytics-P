@@ -1,8 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
-"use client"
-import { useRouter } from "next/navigation"
-import Image from "next/image"
-import { Bird, Droplets, LineChart, HeartPulse, PieChart, ChevronRight } from "lucide-react"
+"use client";
+
+import React, { useState, useCallback, memo } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Bird, Droplets, LineChart, HeartPulse, PieChart, ChevronRight, Loader2 } from "lucide-react";
+import debounce from "lodash/debounce";
 
 const features = [
   {
@@ -21,7 +24,6 @@ const features = [
     action: "Track feed and water",
     href: "/pages/FeedWaterTracking",
   },
- 
   {
     title: "Health and Growth Monitoring",
     icon: HeartPulse,
@@ -46,64 +48,71 @@ const features = [
     action: "View reports",
     href: "/pages/ReportsAndInsights",
   },
-]
+];
 
+function MainFeatures() {
+  const [loadingFeature, setLoadingFeature] = useState<string | null>(null);
+  const pathname = usePathname();
 
+  // Debounced click handler for navigation
+  const handleFeatureClick = useCallback(
+    debounce((href: string) => {
+      setLoadingFeature(href);
+      setTimeout(() => {
+        setLoadingFeature(null);
+      }, 1000); 
+    }, 300),
+    []
+  );
 
-
-export default function MainFeatures() {
-
- const router = useRouter();
-
- 
   return (
-    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-    {features.map((feature) => (
-      <div
-        key={feature.title}
-        className="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-shadow duration-300"
-      >
-        <div className="p-5">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <feature.icon className="h-6 w-6 text-gray-400" aria-hidden="true" />
-            </div>
-            <div className="ml-5 w-0 flex-1">
-              <h3 className="text-lg font-medium text-gray-900 truncate">{feature.title}</h3>
+    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-6 lg:px-8 mt-5">
+      {features.map((feature) => (
+        <div
+          key={feature.title}
+          className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300"
+        >
+          <div className="p-6">
+            <div className="flex items-center">
+              <feature.icon className="h-6 w-6 text-blue-600" aria-hidden="true" />
+              <h3 className="ml-4 text-lg font-semibold text-gray-900 truncate">
+                {feature.title}
+              </h3>
             </div>
           </div>
-        </div>
-        <div className="relative h-48 w-full overflow-hidden bg-gray-100">
-          <Image
-            src={feature.image || "/placeholder.svg"}
-            alt={feature.alt}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform duration-300 group-hover:scale-105"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-              const fallbackElement = e.currentTarget.nextSibling as HTMLElement | null;
-              if (fallbackElement) {
-                fallbackElement.style.display = "flex";
-              }
-            }}
-            
-          />
-          <div className="hidden absolute inset-0 items-center justify-center">
-            <feature.icon className="h-24 w-24 text-gray-400" />
+          <div className="relative h-48 w-full overflow-hidden bg-gray-50">
+            <Image
+              src={feature.image}
+              alt={feature.alt}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              priority={pathname === feature.href}
+            />
+          </div>
+          <div className="bg-gray-100 px-6 py-4">
+            <Link
+              href={feature.href}
+              className={`flex items-center justify-between w-full text-sm font-medium text-blue-700 hover:text-blue-900 transition-colors duration-200
+                ${loadingFeature === feature.href ? "opacity-75 cursor-wait" : ""}`}
+              onClick={() => handleFeatureClick(feature.href)}
+            >
+              <span className="flex items-center">
+                {loadingFeature === feature.href && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                {feature.action}
+              </span>
+              <ChevronRight
+                className={`h-4 w-4 transition-all duration-300
+                  ${loadingFeature === feature.href ? "opacity-0" : "group-hover:opacity-100 group-hover:translate-x-1"}`}
+              />
+            </Link>
           </div>
         </div>
-        <div className="bg-gray-50 px-5 py-3">
-          <button
-            className="text-sm font-medium text-blue-600 hover:text-blue-900 flex items-center justify-between w-full"
-            onClick={() => router.push(feature.href)}
-          >
-            {feature.action}
-            <ChevronRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-          </button>
-        </div>
-      </div>
-    ))}
-  </div>
+      ))}
+    </div>
   );
 }
+
+export default memo(MainFeatures);

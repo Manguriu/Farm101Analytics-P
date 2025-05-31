@@ -8,8 +8,8 @@ export default function HeroCountDown() {
 
   useEffect(() => {
     // Countdown animation
-    const duration = 2000; // Animation duration in milliseconds
-    const stepTime = 20; // Step interval in milliseconds
+    const duration = 2000; 
+    const stepTime = 20; 
 
     const farmsTarget = 10000;
     const uptimeTarget = 99.9;
@@ -39,7 +39,7 @@ export default function HeroCountDown() {
     // Clear interval after animation is complete
     setTimeout(() => clearInterval(interval), duration);
 
-    return () => clearInterval(interval); // Cleanup on component unmount
+    return () => clearInterval(interval); 
   }, []);
 
   return (
