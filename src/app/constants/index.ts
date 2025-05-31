@@ -93,3 +93,7 @@ export const MangeAddedFlock = [
     Deaths: "0",
   },
 ];
+
+//to to get the access token and the refresh token
+export const ACCESS_TOKEN = "access";
+export const REFRESH_TOKEN = "refresh";

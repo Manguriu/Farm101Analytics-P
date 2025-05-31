@@ -1,5 +1,6 @@
-import MainHero from "@/mainPage/MainHero";
-import MainFooter from "@/mainPage/MainFooter";
+import MainHero from "@/app/mainPage/MainHero";
+import MainFooter from "@/app/mainPage/MainFooter";
+
 
 export default function Home() {
   return (

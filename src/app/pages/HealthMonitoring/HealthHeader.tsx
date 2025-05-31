@@ -50,7 +50,6 @@ export default function HealthHeader() {
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
   useEffect(() => {
-    // Fetch initial data (replace with API call if using a backend)
     setHealthChecks([
       {
         id: 1,

@@ -1,65 +1,49 @@
 "use client";
 
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback } from "react";
+import Link from "next/link";
+import debounce from "lodash/debounce";
 import MainHeader from "./MainHeader";
-import HeroCountDown from "./HeroCountDown";
-// import { Button } from "@/app/lib/presentation/components/ui/button/Button";
+import dynamic from "next/dynamic";
+
+// Dynamically import HeroCountDown to reduce initial bundle size
+const HeroCountDown = dynamic(() => import("./HeroCountDown"), { ssr: false });
 
 export default function MainHero() {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0); // Index of the current video
-  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false); // Track video loading state
-  const [loadingButton, setLoadingButton] = useState<"getStarted" | "learnMore" | null>(null); // Track which button is loading
+  const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0);
+  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
+  const [loadingButton, setLoadingButton] = useState<"getStarted" | "learnMore" | null>(null);
 
-  const router = useRouter();
+  const videos = ["/Pvideo1.mp4", "/Pvideo2.mp4", "/Pvideo3.mp4", "/Pvideo4.mp4"];
 
-  const videos = ["/Pvideo1.mp4", "/Pvideo2.mp4", "/Pvideo3.mp4", "/Pvideo4.mp4"]; // Video sources
+  // Debounce video transitions to prevent rapid clicks
+  const handleScreenClick = useCallback(
+    debounce(() => {
+      setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+    }, 1000),
+    [videos.length]
+  );
 
-  // Prefetch routes for smoother navigation
-  useEffect(() => {
-    router.prefetch("/pages/Dashboard");
-    router.prefetch("/pages/About");
-  }, [router]);
-
-  const handleScreenClick = () => {
-    // Change to the next video in the array
-    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
-  };
-
-  const handleNavigation = async (path: string, button: "getStarted" | "learnMore") => {
+  // Memoized navigation handler
+  const handleNavigation = useCallback((button: "getStarted" | "learnMore") => {
     setLoadingButton(button);
-    try {
-      await router.push(path); // Handle navigation
-    } finally {
-      setLoadingButton(null); // Reset loading state
-    }
-  };
+  }, []);
 
   return (
     <div
       className="relative h-screen flex flex-col bg-gradient-to-b from-blue-800 to-gray-900"
-      onClick={handleScreenClick} // Trigger video change on click
+      onClick={handleScreenClick}
     >
-      {/* Static Placeholder */}
-      {!isVideoLoaded && (
-        <img
-          src="/placeholder.jpg"
-          alt="Loading..."
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-      )}
-
-      {/* Active Video */}
+      {/* Video with poster for faster perceived load */}
       <video
         className="absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-1000"
         autoPlay
         muted
         loop
-        onLoadedData={() => setIsVideoLoaded(true)} // Set loading state to true when video is ready
-        preload="auto" // Preload video for faster start
+        poster="/placeholder.jpg"
+        onLoadedData={() => setIsVideoLoaded(true)}
+        preload="auto"
+        key={videos[currentVideoIndex]} 
       >
         <source src={videos[currentVideoIndex]} type="video/mp4" />
       </video>
@@ -82,30 +66,27 @@ export default function MainHero() {
           Harness the power of technology to maximize efficiency, reduce waste, 
           and grow your poultry business. SmartPoultry Hub is built for serious farmers who mean business.
         </p>
-        {/* <Button variant="default" size="lg">
-          Check
-        </Button> */}
 
         {/* Call-to-Actions */}
         <div className="flex flex-wrap justify-center gap-4">
-          <button
-            onClick={() => handleNavigation("/pages/Dashboard", "getStarted")}
+          <Link
+            href="/pages/Dashboard"
             className={`${
               loadingButton === "getStarted" ? "bg-gray-500 cursor-not-allowed" : "bg-yellow-500 hover:bg-yellow-600"
             } text-black font-bold py-3 px-6 sm:px-8 rounded-full shadow-lg transform hover:scale-105 transition`}
-            disabled={loadingButton === "getStarted"}
+            onClick={() => handleNavigation("getStarted")}
           >
             {loadingButton === "getStarted" ? "Loading..." : "Get Started"}
-          </button>
-          <button
-            onClick={() => handleNavigation("/pages/About", "learnMore")}
+          </Link>
+          <Link
+            href="/pages/About"
             className={`${
               loadingButton === "learnMore" ? "bg-gray-500 cursor-not-allowed" : "bg-transparent border-2 border-yellow-500 hover:bg-yellow-500"
             } text-yellow-500 hover:text-black font-bold py-3 px-6 sm:px-8 rounded-full shadow-lg transform hover:scale-105 transition`}
-            disabled={loadingButton === "learnMore"}
+            onClick={() => handleNavigation("learnMore")}
           >
             {loadingButton === "learnMore" ? "Loading..." : "Learn More"}
-          </button>
+          </Link>
         </div>
 
         {/* Business Stats */}
