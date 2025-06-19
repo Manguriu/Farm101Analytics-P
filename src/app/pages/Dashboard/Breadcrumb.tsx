@@ -20,7 +20,6 @@ function Breadcrumb() {
   const pathname = usePathname();
   const [loadingLink, setLoadingLink] = useState<string | null>(null);
 
-  // Memoize breadcrumb items to avoid recalculating
   const breadcrumbItems = useMemo(() => {
     const normalizedPath = pathname.split("?")[0].replace(/\/$/, "");
     const pathSegments = normalizedPath

@@ -9,6 +9,7 @@ import MainFeatures from "./MainFeatures";
 import { useRouter } from "next/navigation";
 import Dashsidebar from "./Dashsidebar";
 import MaindashStats from "./MaindashStats";
+import Profilesection from "../Login/Profilesection";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -30,13 +31,10 @@ export default function Dashboard() {
               <h1 className="text-2xl sm:font-bold text-gray-900 ">
                 Dashboard
               </h1>
-              <button
-                onClick={handleFlockManagement}
-                className="inline-flex items-center px-4 max-sm:px-2 py-2 max-sm:py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                <PlusIcon className="h-5 w-5 mr-2" />
-                Add New Flock
-              </button>
+             
+              <div>
+                <Profilesection />
+              </div>
             </div>
           </div>
         </header>

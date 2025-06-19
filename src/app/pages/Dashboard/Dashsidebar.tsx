@@ -14,6 +14,7 @@ import {
   RefreshIcon,
 } from "@heroicons/react/outline";
 import debounce from "lodash/debounce";
+import Profilesection from "../Login/Profilesection";
 
 interface DashsidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -51,10 +52,9 @@ function Dashsidebar({ className = "", ...props }: DashsidebarProps) {
     debounce((href: string) => {
       setLoadingLink(href);
       setIsSidebarOpen(false);
-      // Simulate navigation delay (replace with router.push in real app)
       setTimeout(() => {
         setLoadingLink(null);
-      }, 1000); // Adjust based on actual navigation time
+      }, 1000); 
     }, 300),
     []
   );
@@ -124,28 +124,7 @@ function Dashsidebar({ className = "", ...props }: DashsidebarProps) {
           ))}
         </nav>
 
-        {/* Profile Section */}
-        <div className="absolute bottom-0 w-full p-6 border-t border-blue-700">
-          <div className="flex items-center space-x-3">
-            <Image
-              className="h-10 w-10 rounded-full border-2 border-blue-600 object-cover"
-              src="/Chick1.png"
-              alt="User Avatar"
-              width={40}
-              height={40}
-              priority
-            />
-            <div>
-              <p className="text-sm font-semibold text-white">John Smith</p>
-              <Link
-                href="/profile"
-                className="text-xs font-medium text-blue-300 hover:text-yellow-400 transition-colors"
-              >
-                View profile
-              </Link>
-            </div>
-          </div>
-        </div>
+      
       </aside>
 
       {/* Overlay for mobile when sidebar is open */}
